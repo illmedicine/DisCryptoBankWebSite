@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DisCryptoBank — Autonomous Crypto Payroll & Event Engine</title>
   <meta name="description" content="DisCryptoBank is an autonomous crypto payroll engine powering decentralized payments, staff management, and interactive engagement events — starting with Discord and expanding beyond. A product of Illy Robotic Instruments." />
-  <meta name="keywords" content="crypto payroll, Discord bot, Solana payments, DCB Events, staff management, automated payouts, engagement, DisCryptoBank" />
+  <meta name="keywords" content="crypto payroll, Discord bot, Solana payments, USD payments, DCB Events, staff management, automated payouts, engagement, DisCryptoBank" />
   <meta property="og:title" content="DisCryptoBank — Autonomous Crypto Payroll & Event Engine" />
-  <meta property="og:description" content="Automated crypto payroll, staff management, and interactive engagement events. Powered by Solana. Built by Illy Robotic Instruments." />
+  <meta property="og:description" content="Automated crypto payroll, staff management, and interactive engagement events. SOL & USD payments. Built by Illy Robotic Instruments." />
   <meta property="og:type" content="website" />
   <!-- Redirect /products/discryptobank/ to github.io -->
   <script>
@@ -242,6 +242,12 @@
       letter-spacing: 0.02em;
     }
     .scroll-item .icon { color: var(--cyan); font-size: 1rem; }
+    .ticker-stat { color: var(--cyan); font-weight: 700; }
+    .ticker-stat .counter-val, .ticker-stat .counter-val-dup {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.88rem;
+      background: rgba(34,211,238,0.12); padding: 2px 8px; border-radius: 6px;
+      border: 1px solid rgba(34,211,238,0.25);
+    }
     @keyframes scroll {
       0% { transform: translateX(0); }
       100% { transform: translateX(-50%); }
@@ -562,9 +568,11 @@
     </nav>
 
     <div class="header-actions">
-      <a class="btn btn-outline hide-mobile" href="https://www.illyrobotic-ai.com" target="_blank" rel="noreferrer">Illy Robotic</a>
-      <a class="btn btn-primary" href="https://discord.com/oauth2/authorize?client_id=1465938334017912973" target="_blank" rel="noreferrer">
-        Get Started
+      <a class="btn btn-glow" id="header-discord-btn" href="https://discord.com/oauth2/authorize?client_id=1465938334017912973" target="_blank" rel="noreferrer" onclick="trackClick('discord')">
+        🤖 Add to Discord
+      </a>
+      <a class="btn btn-primary" id="header-manager-btn" href="https://illmedicine.github.io/discord-crypto-task-payroll-bot/#dashboard" target="_blank" rel="noreferrer" onclick="trackClick('manager')">
+        🚀 Explore DCB Event Manager
       </a>
     </div>
 
@@ -584,20 +592,20 @@
     <div class="hero-content fade-up">
       <div class="hero-badge">
         <span class="dot"></span>
-        Autonomous Payroll · SOL Payouts · Engagement Events
+        Autonomous Payroll · SOL & USD Payouts · Engagement Events
       </div>
       <h1>THE AUTONOMOUS<br><span class="gradient-text">CRYPTO PAYROLL</span><br>ENGINE</h1>
       <p class="lead">
         Decentralized payroll, interactive engagement events, and transparent staff management — powered by Solana. Starting with Discord, built to scale everywhere.
       </p>
       <div class="hero-ctas">
-        <a class="btn btn-primary" href="https://discord.com/oauth2/authorize?client_id=1465938334017912973" target="_blank" rel="noreferrer">
+        <a class="btn btn-primary" id="hero-discord-btn" href="https://discord.com/oauth2/authorize?client_id=1465938334017912973" target="_blank" rel="noreferrer" onclick="trackClick('discord')">
           Add to Discord
         </a>
         <a class="btn btn-glow" href="#events">
           🎉 Explore DCB Events
         </a>
-        <a class="btn btn-outline" href="#manager">
+        <a class="btn btn-outline" id="hero-manager-btn" href="https://illmedicine.github.io/discord-crypto-task-payroll-bot/#dashboard" target="_blank" rel="noreferrer" onclick="trackClick('manager')">
           Event Manager →
         </a>
       </div>
@@ -605,7 +613,7 @@
 
     <div class="hero-stats fade-up">
       <div class="hero-stat">
-        <div class="value">SOL</div>
+        <div class="value">SOL/USD</div>
         <div class="label">Native Payments</div>
       </div>
       <div class="hero-stat">
@@ -631,18 +639,24 @@
     <span class="scroll-item"><span class="icon">◆</span> Photo Voting Events</span>
     <span class="scroll-item"><span class="icon">◆</span> Transparent Ledger Audits</span>
     <span class="scroll-item"><span class="icon">◆</span> Staff Management UI</span>
-    <span class="scroll-item"><span class="icon">◆</span> Solana Powered</span>
+    <span class="scroll-item"><span class="icon">◆</span> SOL & USD Payments</span>
     <span class="scroll-item"><span class="icon">◆</span> Proof-Based Verification</span>
     <span class="scroll-item"><span class="icon">◆</span> Multi-Platform Ready</span>
     <span class="scroll-item"><span class="icon">◆</span> DCB Event Manager</span>
+    <span class="scroll-item ticker-stat" id="ticker-visitors"><span class="icon">👁️</span> <span class="counter-val">0</span> Site Visitors</span>
+    <span class="scroll-item ticker-stat" id="ticker-discord-clicks"><span class="icon">🤖</span> <span class="counter-val">0</span> Discord Clicks</span>
+    <span class="scroll-item ticker-stat" id="ticker-manager-clicks"><span class="icon">🚀</span> <span class="counter-val">0</span> Manager Clicks</span>
     <span class="scroll-item"><span class="icon">◆</span> Automated Crypto Payroll</span>
     <span class="scroll-item"><span class="icon">◆</span> Photo Voting Events</span>
     <span class="scroll-item"><span class="icon">◆</span> Transparent Ledger Audits</span>
     <span class="scroll-item"><span class="icon">◆</span> Staff Management UI</span>
-    <span class="scroll-item"><span class="icon">◆</span> Solana Powered</span>
+    <span class="scroll-item"><span class="icon">◆</span> SOL & USD Payments</span>
     <span class="scroll-item"><span class="icon">◆</span> Proof-Based Verification</span>
     <span class="scroll-item"><span class="icon">◆</span> Multi-Platform Ready</span>
     <span class="scroll-item"><span class="icon">◆</span> DCB Event Manager</span>
+    <span class="scroll-item ticker-stat"><span class="icon">👁️</span> <span class="counter-val-dup visitors-dup">0</span> Site Visitors</span>
+    <span class="scroll-item ticker-stat"><span class="icon">🤖</span> <span class="counter-val-dup discord-dup">0</span> Discord Clicks</span>
+    <span class="scroll-item ticker-stat"><span class="icon">🚀</span> <span class="counter-val-dup manager-dup">0</span> Manager Clicks</span>
   </div>
 </div>
 
@@ -659,7 +673,7 @@
       <div class="card feature-card fade-up">
         <div class="icon-wrap icon-cyan">💰</div>
         <h3>Automated Crypto Payroll</h3>
-        <p>Server treasuries fund instant SOL payouts to verified workers. No intermediaries. No manual approvals. Smart routing ensures funds go where they belong.</p>
+        <p>Server treasuries fund instant SOL & USD payouts to verified workers. No intermediaries. No manual approvals. Smart routing ensures funds go where they belong.</p>
       </div>
       <div class="card feature-card fade-up">
         <div class="icon-wrap icon-emerald">📋</div>
@@ -868,13 +882,13 @@
         <div class="desc">The core Discord bot with all payroll and event capabilities. Free for every server.</div>
         <ul>
           <li><span class="check">✓</span> Treasury & wallet management</li>
-          <li><span class="check">✓</span> Direct SOL payments (/pay)</li>
+          <li><span class="check">✓</span> Direct SOL & USD payments (/pay)</li>
           <li><span class="check">✓</span> Bulk task creation & assignment</li>
           <li><span class="check">✓</span> Proof verification & auto-payouts</li>
           <li><span class="check">✓</span> DCB Events (photo voting)</li>
           <li><span class="check">✓</span> Full command dictionary</li>
         </ul>
-        <a class="btn btn-outline" style="width:100%; justify-content:center;" href="https://discord.com/oauth2/authorize?client_id=1465938334017912973" target="_blank" rel="noreferrer">
+        <a class="btn btn-outline" style="width:100%; justify-content:center;" href="https://discord.com/oauth2/authorize?client_id=1465938334017912973" target="_blank" rel="noreferrer" onclick="trackClick('discord')">
           Add to Discord — Free
         </a>
       </div>
@@ -893,8 +907,8 @@
           <li><span class="check">✓</span> Exportable financial records</li>
           <li><span class="check">✓</span> Priority support</li>
         </ul>
-        <a class="btn btn-primary" style="width:100%; justify-content:center;" href="#cta">
-          Join Waitlist
+        <a class="btn btn-primary" style="width:100%; justify-content:center;" href="https://illmedicine.github.io/discord-crypto-task-payroll-bot/#dashboard" target="_blank" rel="noreferrer" onclick="trackClick('manager')">
+          Explore Event Manager
         </a>
       </div>
     </div>
@@ -911,10 +925,10 @@
           BEYOND DISCORD:<br><span class="gradient-text">PAYROLL ANYWHERE</span>
         </h2>
         <p style="margin-top:16px; color:var(--text-secondary); line-height:1.7; font-size:0.95rem;">
-          DisCryptoBank started as a Discord-native payroll engine, but the underlying architecture is designed for any platform where teams coordinate work, from messaging apps to full web applications.
+          DisCryptoBank started as a Discord-native payroll engine supporting SOL & USD, but the underlying architecture is designed for any platform where teams coordinate work, from messaging apps to full web applications.
         </p>
         <p style="margin-top:12px; color:var(--text-secondary); line-height:1.7; font-size:0.95rem;">
-          The same autonomous verification, smart treasury routing, and instant SOL settlements that power Discord servers today will extend to every platform your team uses.
+          The same autonomous verification, smart treasury routing, and instant SOL & USD settlements that power Discord servers today will extend to every platform your team uses.
         </p>
 
         <div class="platform-tags">
@@ -935,7 +949,7 @@
               <span style="color:var(--cyan);font-weight:700;flex-shrink:0;">01</span>
               <div>
                 <div style="font-weight:600;font-size:0.88rem;">Platform-Agnostic Treasury</div>
-                <div style="font-size:0.8rem;color:var(--text-secondary);margin-top:2px;">Wallets and payments operate on Solana's blockchain — independent of any messaging platform.</div>
+                <div style="font-size:0.8rem;color:var(--text-secondary);margin-top:2px;">Wallets and payments operate on Solana's blockchain with USD conversion support — independent of any messaging platform.</div>
               </div>
             </div>
             <div style="display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.05);">
@@ -1128,7 +1142,7 @@
   <div class="container">
     <div class="section-header fade-up" style="text-align:center;max-width:600px;margin:0 auto 56px;">
       <div class="section-label" style="justify-content:center;">Transparency</div>
-      <h2>PROOF → VERIFY →<br><span class="gradient-text">PAID IN SOL</span></h2>
+      <h2>PROOF → VERIFY →<br><span class="gradient-text">PAID IN SOL & USD</span></h2>
       <p style="margin-left:auto;margin-right:auto;">Designed to be easy for workers and transparent for buyers. Every payment is verified and traceable.</p>
     </div>
 
@@ -1145,7 +1159,7 @@
       </div>
       <div class="card fade-up" style="padding:28px;text-align:center;">
         <div style="font-size:2rem;margin-bottom:12px;">💰</div>
-        <h4 style="font-weight:700;margin-bottom:8px;">SOL Deposited</h4>
+        <h4 style="font-weight:700;margin-bottom:8px;">SOL/USD Deposited</h4>
         <p style="font-size:0.85rem;color:var(--text-secondary);">Payment routes from treasury to the worker's saved wallet. Instant. Traceable.</p>
       </div>
     </div>
@@ -1204,13 +1218,13 @@
     <div class="cta-content fade-up">
       <div class="section-label" style="justify-content:center; margin-bottom:20px;">Get Started</div>
       <h2>READY TO <span class="gradient-text">AUTOMATE</span> YOUR PAYROLL?</h2>
-      <p>Turn your community into an autonomous earning engine. Task payouts, engagement events, proof verification, and SOL payments — all automated.</p>
+      <p>Turn your community into an autonomous earning engine. Task payouts, engagement events, proof verification, and SOL & USD payments — all automated.</p>
       <div class="cta-buttons">
-        <a class="btn btn-primary" href="https://discord.com/oauth2/authorize?client_id=1465938334017912973" target="_blank" rel="noreferrer">
+        <a class="btn btn-primary" href="https://discord.com/oauth2/authorize?client_id=1465938334017912973" target="_blank" rel="noreferrer" onclick="trackClick('discord')">
           Add DisCryptoBank — Free
         </a>
-        <a class="btn btn-glow" href="https://illmedicine.github.io/illysocialV2/" target="_blank" rel="noreferrer">
-          Explore IllySocial
+        <a class="btn btn-glow" href="https://illmedicine.github.io/discord-crypto-task-payroll-bot/#dashboard" target="_blank" rel="noreferrer" onclick="trackClick('manager')">
+          Explore DCB Event Manager
         </a>
         <a class="btn btn-outline" href="https://www.illyrobotic-ai.com" target="_blank" rel="noreferrer">
           Illy Robotic →
@@ -1282,6 +1296,50 @@
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+
+<!-- ━━━ VISITOR & CLICK TRACKING ━━━ -->
+<script>
+  // Simple localStorage-based analytics counters
+  (function() {
+    const KEYS = { visitors: 'dcb_visitors', discord: 'dcb_discord_clicks', manager: 'dcb_manager_clicks' };
+
+    // Increment visitor count once per session
+    if (!sessionStorage.getItem('dcb_counted')) {
+      const v = parseInt(localStorage.getItem(KEYS.visitors) || '0', 10) + 1;
+      localStorage.setItem(KEYS.visitors, v);
+      sessionStorage.setItem('dcb_counted', '1');
+    }
+
+    function updateDisplay() {
+      const visitors = localStorage.getItem(KEYS.visitors) || '0';
+      const discord  = localStorage.getItem(KEYS.discord) || '0';
+      const manager  = localStorage.getItem(KEYS.manager) || '0';
+
+      // Primary ticker counters
+      const vEl = document.querySelector('#ticker-visitors .counter-val');
+      const dEl = document.querySelector('#ticker-discord-clicks .counter-val');
+      const mEl = document.querySelector('#ticker-manager-clicks .counter-val');
+      if (vEl) vEl.textContent = visitors;
+      if (dEl) dEl.textContent = discord;
+      if (mEl) mEl.textContent = manager;
+
+      // Duplicate ticker counters (for seamless scroll)
+      document.querySelectorAll('.visitors-dup').forEach(el => el.textContent = visitors);
+      document.querySelectorAll('.discord-dup').forEach(el => el.textContent = discord);
+      document.querySelectorAll('.manager-dup').forEach(el => el.textContent = manager);
+    }
+
+    updateDisplay();
+
+    // Global click tracker called from button onclick
+    window.trackClick = function(type) {
+      const key = type === 'discord' ? KEYS.discord : KEYS.manager;
+      const val = parseInt(localStorage.getItem(key) || '0', 10) + 1;
+      localStorage.setItem(key, val);
+      updateDisplay();
+    };
+  })();
 </script>
 
 </body>
