@@ -7,6 +7,10 @@
         "/^git add -A ; git commit -m \"Add header CTAs, USD payment option, Event Manager links, click/visitor tracking ticker\" ; git push origin main$/": {
             "approve": true,
             "matchCommandLine": true
+        },
+        "/^git add -A ; git commit -m \"Add affiliate link buttons to footer\" ; git push origin main$/": {
+            "approve": true,
+            "matchCommandLine": true
         }
     }
 }
