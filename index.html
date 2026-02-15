@@ -1380,26 +1380,16 @@
 <script>
 (function() {
   /* ═══════════════════════════════════════════════════════════════════
-   * DisCryptoBank Global Network Stats — Ticker Only
-   * ─────────────────────────────────────────────────
-   * Populates the scrolling ticker with global bot stats.
-   * Stats are stored in localStorage and can be updated by the bot
-   * backend via postMessage or by manually setting dcb_global_stats.
-   *
-   * To update stats from your bot backend, set this localStorage key:
-   *   localStorage.setItem('dcb_global_stats', JSON.stringify({
-   *     totalTransactions: 1234,
-   *     eventsHosted: 56,
-   *     tasksCreated: 89,
-   *     totalPaidOut: 4500.00,
-   *     treasuryWalletValue: 12000.50,
-   *     userWalletValue: 8500.25,
-   *     totalWalletValue: 20500.75,
-   *     activeServers: 15,
-   *     totalPayouts: 320,
-   *     totalUsers: 450
-   *   }));
+   * DisCryptoBank Global Network Stats — Ticker
+   * ─────────────────────────────────────────────
+   * Fetches live global bot stats from the DisCryptoBank API and
+   * populates the scrolling ticker. Falls back to cached data in
+   * localStorage when the API is unreachable.
    * ═══════════════════════════════════════════════════════════════════ */
+
+  var API_URL = 'https://discryptobank-api.up.railway.app/api/stats';
+  var CACHE_KEY = 'dcb_global_stats';
+  var REFRESH_INTERVAL = 120000; // refresh every 2 minutes
 
   function formatNumber(num) {
     if (num === null || num === undefined || isNaN(num)) return '—';
@@ -1416,16 +1406,16 @@
   }
 
   function updateTickerStats(data) {
-    const events = formatNumber(data.eventsHosted);
-    const transactions = formatNumber(data.totalTransactions);
-    const tasks = formatNumber(data.tasksCreated);
-    const paidOut = formatUSD(data.totalPaidOut);
-    const treasuryVal = formatUSD(data.treasuryWalletValue);
-    const userWalletVal = formatUSD(data.userWalletValue);
-    const walletVal = formatUSD(data.totalWalletValue);
-    const servers = formatNumber(data.activeServers);
-    const payouts = formatNumber(data.totalPayouts);
-    const totalUsers = formatNumber(data.totalUsers);
+    var events = formatNumber(data.eventsHosted);
+    var transactions = formatNumber(data.totalTransactions);
+    var tasks = formatNumber(data.tasksCreated);
+    var paidOut = formatUSD(data.totalPaidOut);
+    var treasuryVal = formatUSD(data.treasuryWalletValue);
+    var userWalletVal = formatUSD(data.userWalletValue);
+    var walletVal = formatUSD(data.totalWalletValue);
+    var servers = formatNumber(data.activeServers);
+    var payouts = formatNumber(data.totalPayouts);
+    var totalUsers = formatNumber(data.totalUsers);
 
     // Primary ticker
     var el;
@@ -1453,21 +1443,38 @@
     document.querySelectorAll('.users-dup').forEach(function(e) { e.textContent = totalUsers; });
   }
 
-  // Load stats from localStorage (set by the bot backend or manually)
-  function loadStats() {
+  // Load cached stats from localStorage (instant display)
+  function loadCachedStats() {
     try {
-      var raw = localStorage.getItem('dcb_global_stats');
+      var raw = localStorage.getItem(CACHE_KEY);
       if (raw) { updateTickerStats(JSON.parse(raw)); }
     } catch(e) { /* ignore */ }
   }
 
-  // Run on page load
-  loadStats();
+  // Fetch fresh stats from the API
+  function fetchStats() {
+    fetch(API_URL, { mode: 'cors' })
+      .then(function(res) {
+        if (!res.ok) throw new Error('API returned ' + res.status);
+        return res.json();
+      })
+      .then(function(data) {
+        updateTickerStats(data);
+        // Cache in localStorage for offline/fallback
+        try { localStorage.setItem(CACHE_KEY, JSON.stringify(data)); } catch(e) {}
+      })
+      .catch(function(err) {
+        console.warn('[DCB Stats] API fetch failed, using cached data:', err.message);
+        loadCachedStats();
+      });
+  }
 
-  // Listen for storage changes (if stats updated from another tab/bot)
-  window.addEventListener('storage', function(e) {
-    if (e.key === 'dcb_global_stats') loadStats();
-  });
+  // Show cached stats immediately, then fetch fresh data
+  loadCachedStats();
+  fetchStats();
+
+  // Auto-refresh stats periodically
+  setInterval(fetchStats, REFRESH_INTERVAL);
 })();
 </script>
 
