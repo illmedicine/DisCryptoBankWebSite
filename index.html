@@ -630,33 +630,37 @@
 <!-- ━━━ LIVE STATS TICKER (sticky, hover-pause, stats only) ━━━ -->
 <div class="scroll-banner">
   <div class="scroll-track">
-    <span class="scroll-item ticker-stat" id="ticker-visitors"><span class="icon">👁️</span> <span class="counter-val">0</span> Site Visitors</span>
-    <span class="scroll-item ticker-stat" id="ticker-discord-clicks"><span class="icon">🤖</span> <span class="counter-val">0</span> Discord Clicks</span>
-    <span class="scroll-item ticker-stat" id="ticker-manager-clicks"><span class="icon">🚀</span> <span class="counter-val">0</span> Manager Clicks</span>
-    <span class="scroll-item ticker-stat-gold" id="ticker-events-hosted"><span class="icon">🎉</span> <span class="counter-val">—</span> Events Hosted</span>
-    <span class="scroll-item ticker-stat-purple" id="ticker-total-transactions"><span class="icon">📊</span> <span class="counter-val">—</span> Total Transactions</span>
-    <span class="scroll-item ticker-stat" id="ticker-tasks-created"><span class="icon">📋</span> <span class="counter-val">—</span> Tasks Created</span>
+    <span class="scroll-item ticker-stat-green" id="ticker-treasury-wallets"><span class="icon">🏦</span> <span class="counter-val">—</span> Treasury Wallets</span>
+    <span class="scroll-item ticker-stat-purple" id="ticker-user-wallets"><span class="icon">👛</span> <span class="counter-val">—</span> User Wallets</span>
     <span class="scroll-item ticker-stat-rose" id="ticker-total-paid-out"><span class="icon">💸</span> <span class="counter-val">—</span> Total Paid Out</span>
-    <span class="scroll-item ticker-stat-gold" id="ticker-treasury-value"><span class="icon">🏦</span> <span class="counter-val">—</span> Treasury Value</span>
-    <span class="scroll-item ticker-stat-green" id="ticker-user-wallet-value"><span class="icon">👛</span> <span class="counter-val">—</span> User Wallet Value</span>
-    <span class="scroll-item ticker-stat-gold" id="ticker-wallet-value"><span class="icon">💰</span> <span class="counter-val">—</span> Combined Value</span>
+    <span class="scroll-item ticker-stat-gold" id="ticker-treasury-value"><span class="icon">💰</span> <span class="counter-val">—</span> Treasury Balance</span>
+    <span class="scroll-item ticker-stat-green" id="ticker-user-wallet-value"><span class="icon">💎</span> <span class="counter-val">—</span> User Balance</span>
+    <span class="scroll-item ticker-stat-gold" id="ticker-wallet-value"><span class="icon">🏆</span> <span class="counter-val">—</span> Combined Balance</span>
+    <span class="scroll-item ticker-stat-purple" id="ticker-total-transactions"><span class="icon">📊</span> <span class="counter-val">—</span> Total Transactions</span>
+    <span class="scroll-item ticker-stat-gold" id="ticker-events-hosted"><span class="icon">🎉</span> <span class="counter-val">—</span> Events Hosted</span>
+    <span class="scroll-item ticker-stat" id="ticker-tasks-created"><span class="icon">📋</span> <span class="counter-val">—</span> Tasks Created</span>
     <span class="scroll-item ticker-stat-green" id="ticker-servers"><span class="icon">🌐</span> <span class="counter-val">—</span> Active Servers</span>
     <span class="scroll-item ticker-stat" id="ticker-payouts"><span class="icon">⚡</span> <span class="counter-val">—</span> Payouts Made</span>
     <span class="scroll-item ticker-stat-purple" id="ticker-total-users"><span class="icon">👥</span> <span class="counter-val">—</span> Total Users</span>
+    <span class="scroll-item ticker-stat" id="ticker-visitors"><span class="icon">👁️</span> <span class="counter-val">0</span> Site Visitors</span>
+    <span class="scroll-item ticker-stat" id="ticker-discord-clicks"><span class="icon">🤖</span> <span class="counter-val">0</span> Discord Clicks</span>
+    <span class="scroll-item ticker-stat" id="ticker-manager-clicks"><span class="icon">🚀</span> <span class="counter-val">0</span> Manager Clicks</span>
     <!-- duplicate set for seamless loop -->
-    <span class="scroll-item ticker-stat"><span class="icon">👁️</span> <span class="counter-val-dup visitors-dup">0</span> Site Visitors</span>
-    <span class="scroll-item ticker-stat"><span class="icon">🤖</span> <span class="counter-val-dup discord-dup">0</span> Discord Clicks</span>
-    <span class="scroll-item ticker-stat"><span class="icon">🚀</span> <span class="counter-val-dup manager-dup">0</span> Manager Clicks</span>
-    <span class="scroll-item ticker-stat-gold"><span class="icon">🎉</span> <span class="counter-val-dup events-dup">—</span> Events Hosted</span>
-    <span class="scroll-item ticker-stat-purple"><span class="icon">📊</span> <span class="counter-val-dup transactions-dup">—</span> Total Transactions</span>
-    <span class="scroll-item ticker-stat"><span class="icon">📋</span> <span class="counter-val-dup tasks-dup">—</span> Tasks Created</span>
+    <span class="scroll-item ticker-stat-green"><span class="icon">🏦</span> <span class="counter-val-dup treasury-wallets-dup">—</span> Treasury Wallets</span>
+    <span class="scroll-item ticker-stat-purple"><span class="icon">👛</span> <span class="counter-val-dup user-wallets-dup">—</span> User Wallets</span>
     <span class="scroll-item ticker-stat-rose"><span class="icon">💸</span> <span class="counter-val-dup paidout-dup">—</span> Total Paid Out</span>
-    <span class="scroll-item ticker-stat-gold"><span class="icon">🏦</span> <span class="counter-val-dup treasury-dup">—</span> Treasury Value</span>
-    <span class="scroll-item ticker-stat-green"><span class="icon">👛</span> <span class="counter-val-dup userwallets-dup">—</span> User Wallet Value</span>
-    <span class="scroll-item ticker-stat-gold"><span class="icon">💰</span> <span class="counter-val-dup wallet-dup">—</span> Combined Value</span>
+    <span class="scroll-item ticker-stat-gold"><span class="icon">💰</span> <span class="counter-val-dup treasury-dup">—</span> Treasury Balance</span>
+    <span class="scroll-item ticker-stat-green"><span class="icon">💎</span> <span class="counter-val-dup userbalance-dup">—</span> User Balance</span>
+    <span class="scroll-item ticker-stat-gold"><span class="icon">🏆</span> <span class="counter-val-dup wallet-dup">—</span> Combined Balance</span>
+    <span class="scroll-item ticker-stat-purple"><span class="icon">📊</span> <span class="counter-val-dup transactions-dup">—</span> Total Transactions</span>
+    <span class="scroll-item ticker-stat-gold"><span class="icon">🎉</span> <span class="counter-val-dup events-dup">—</span> Events Hosted</span>
+    <span class="scroll-item ticker-stat"><span class="icon">📋</span> <span class="counter-val-dup tasks-dup">—</span> Tasks Created</span>
     <span class="scroll-item ticker-stat-green"><span class="icon">🌐</span> <span class="counter-val-dup servers-dup">—</span> Active Servers</span>
     <span class="scroll-item ticker-stat"><span class="icon">⚡</span> <span class="counter-val-dup payouts-dup">—</span> Payouts Made</span>
     <span class="scroll-item ticker-stat-purple"><span class="icon">👥</span> <span class="counter-val-dup users-dup">—</span> Total Users</span>
+    <span class="scroll-item ticker-stat"><span class="icon">👁️</span> <span class="counter-val-dup visitors-dup">0</span> Site Visitors</span>
+    <span class="scroll-item ticker-stat"><span class="icon">🤖</span> <span class="counter-val-dup discord-dup">0</span> Discord Clicks</span>
+    <span class="scroll-item ticker-stat"><span class="icon">🚀</span> <span class="counter-val-dup manager-dup">0</span> Manager Clicks</span>
   </div>
 </div>
 
@@ -1377,19 +1381,21 @@
    * BACKEND API CONTRACT:
    *  GET /api/stats
    *  Response: {
-   *    totalTransactions: number,       // every tx across all servers
-   *    eventsHosted: number,            // total events/contests/tasks created
-   *    tasksCreated: number,            // total tasks created (subset)
-   *    totalPaidOut: number,            // USD value of all payouts
-   *    totalPaidOutSOL: number,         // SOL value of all payouts (optional)
-   *    treasuryWalletValue: number,     // combined USD value of all treasury wallets
-   *    userWalletValue: number,         // combined USD value of all user wallets
-   *    totalWalletValue: number,        // treasury + user wallets combined
-   *    totalWalletValueSOL: number,     // combined SOL value (optional)
-   *    activeServers: number,           // guilds with bot installed
-   *    totalPayouts: number,            // completed payout transactions
-   *    totalUsers: number,              // unique users with connected wallets
-   *    lastUpdated: string              // ISO timestamp of last data refresh
+   *    totalTransactions: number,           // every tx across all servers
+   *    eventsHosted: number,                // total events/contests/tasks created
+   *    tasksCreated: number,                // total tasks created (subset)
+   *    totalPaidOut: number,                // USD value of all payouts
+   *    totalPaidOutSOL: number,             // SOL value of all payouts (optional)
+   *    treasuryWalletValue: number,         // combined USD value of all treasury wallets
+   *    userWalletValue: number,             // combined USD value of all user wallets
+   *    totalWalletValue: number,            // treasury + user wallets combined
+   *    totalWalletValueSOL: number,         // combined SOL value (optional)
+   *    treasuryWalletsConnected: number,    // count of treasury wallets across all servers
+   *    userWalletsConnected: number,        // count of users with connected Solana wallets
+   *    activeServers: number,               // guilds with bot installed
+   *    totalPayouts: number,                // completed payout transactions
+   *    totalUsers: number,                  // unique users across all servers
+   *    lastUpdated: string                  // ISO timestamp of last data refresh
    *  }
    * ═══════════════════════════════════════════════════════════════════ */
 
@@ -1430,6 +1436,8 @@
 
   // ── DOM UPDATER ────────────────────────────────────────────────────
   function updateAllDisplays(data) {
+    const treasuryWallets = formatNumber(data.treasuryWalletsConnected);
+    const userWallets = formatNumber(data.userWalletsConnected);
     const events = formatNumber(data.eventsHosted);
     const transactions = formatNumber(data.totalTransactions);
     const tasks = formatNumber(data.tasksCreated);
@@ -1446,19 +1454,21 @@
 
     // ── Scrolling Ticker (primary) ──
     const map = {
-      'ticker-visitors': visitors,
-      'ticker-discord-clicks': discordClicks,
-      'ticker-manager-clicks': managerClicks,
-      'ticker-events-hosted': events,
-      'ticker-total-transactions': transactions,
-      'ticker-tasks-created': tasks,
+      'ticker-treasury-wallets': treasuryWallets,
+      'ticker-user-wallets': userWallets,
       'ticker-total-paid-out': paidOut,
       'ticker-treasury-value': treasuryVal,
       'ticker-user-wallet-value': userWalletVal,
       'ticker-wallet-value': walletVal,
+      'ticker-total-transactions': transactions,
+      'ticker-events-hosted': events,
+      'ticker-tasks-created': tasks,
       'ticker-servers': servers,
       'ticker-payouts': payouts,
       'ticker-total-users': totalUsers,
+      'ticker-visitors': visitors,
+      'ticker-discord-clicks': discordClicks,
+      'ticker-manager-clicks': managerClicks,
     };
     for (const [id, val] of Object.entries(map)) {
       const el = document.querySelector('#' + id + ' .counter-val');
@@ -1467,10 +1477,11 @@
 
     // ── Duplicates for seamless loop ──
     const dupMap = {
+      'treasury-wallets-dup': treasuryWallets, 'user-wallets-dup': userWallets,
+      'paidout-dup': paidOut, 'treasury-dup': treasuryVal, 'userbalance-dup': userWalletVal,
+      'wallet-dup': walletVal, 'transactions-dup': transactions, 'events-dup': events,
+      'tasks-dup': tasks, 'servers-dup': servers, 'payouts-dup': payouts, 'users-dup': totalUsers,
       'visitors-dup': visitors, 'discord-dup': discordClicks, 'manager-dup': managerClicks,
-      'events-dup': events, 'transactions-dup': transactions, 'tasks-dup': tasks,
-      'paidout-dup': paidOut, 'treasury-dup': treasuryVal, 'userwallets-dup': userWalletVal,
-      'wallet-dup': walletVal, 'servers-dup': servers, 'payouts-dup': payouts, 'users-dup': totalUsers,
     };
     for (const [cls, val] of Object.entries(dupMap)) {
       document.querySelectorAll('.' + cls).forEach(el => el.textContent = val);
@@ -1482,7 +1493,8 @@
   const SEED_STATS = {
     totalTransactions: 0, eventsHosted: 0, tasksCreated: 0,
     totalPaidOut: 0, treasuryWalletValue: 0, userWalletValue: 0,
-    totalWalletValue: 0, activeServers: 0, totalPayouts: 0, totalUsers: 0,
+    totalWalletValue: 0, treasuryWalletsConnected: 0, userWalletsConnected: 0,
+    activeServers: 0, totalPayouts: 0, totalUsers: 0,
     siteVisitors: 0, discordClicks: 0, managerClicks: 0,
     lastUpdated: new Date().toISOString(),
   };
