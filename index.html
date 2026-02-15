@@ -1478,12 +1478,21 @@
   }
 
   // ── CACHE (localStorage fallback) ──────────────────────────────────
+  // Seed data shown when the API is unreachable (Railway down, first visit, etc.)
+  const SEED_STATS = {
+    totalTransactions: 0, eventsHosted: 0, tasksCreated: 0,
+    totalPaidOut: 0, treasuryWalletValue: 0, userWalletValue: 0,
+    totalWalletValue: 0, activeServers: 0, totalPayouts: 0, totalUsers: 0,
+    siteVisitors: 0, discordClicks: 0, managerClicks: 0,
+    lastUpdated: new Date().toISOString(),
+  };
+
   function getCachedStats() {
     try {
       const raw = localStorage.getItem(CACHE_KEY);
       if (!raw) return null;
       const cached = JSON.parse(raw);
-      if (Date.now() - cached._cachedAt > CACHE_TTL_MS * 10) return null; // stale after 10min
+      if (Date.now() - cached._cachedAt > CACHE_TTL_MS * 10) return null;
       return cached;
     } catch { return null; }
   }
@@ -1501,7 +1510,7 @@
       const res = await fetch(STATS_ENDPOINT, {
         method: 'GET',
         headers: { 'Accept': 'application/json' },
-        signal: AbortSignal.timeout(10000) // 10s timeout
+        signal: AbortSignal.timeout(10000)
       });
       if (!res.ok) throw new Error('API returned ' + res.status);
       const data = await res.json();
@@ -1510,29 +1519,23 @@
       return true;
     } catch (err) {
       console.warn('[DCB Stats] API fetch failed:', err.message);
-      // Fall back to cached data
       const cached = getCachedStats();
-      if (cached) {
-        updateAllDisplays(cached);
-        const noteEl = document.getElementById('live-last-updated');
-        if (noteEl) noteEl.textContent = 'Using cached data · Reconnecting…';
-      }
+      updateAllDisplays(cached || SEED_STATS);
       return false;
     }
   }
 
   // ── INITIALIZATION & POLLING ───────────────────────────────────────
-  // Immediately display cached data if available
-  const cached = getCachedStats();
-  if (cached) updateAllDisplays(cached);
+  // Show cached or seed data immediately so ticker never shows dashes
+  updateAllDisplays(getCachedStats() || SEED_STATS);
 
   // First fetch on page load
   fetchStats();
 
-  // Poll every 30 seconds for fresh data across all servers
+  // Poll every 30 seconds
   setInterval(fetchStats, POLL_INTERVAL_MS);
 
-  // Also refresh when tab becomes visible again (user returns to tab)
+  // Refresh when tab becomes visible
   document.addEventListener('visibilitychange', function() {
     if (!document.hidden) fetchStats();
   });
