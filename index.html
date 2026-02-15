@@ -1332,65 +1332,25 @@
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 </script>
 
-<!-- ━━━ VISITOR & CLICK TRACKING ━━━ -->
-<script>
-  // Simple localStorage-based analytics counters
-  (function() {
-    const KEYS = { visitors: 'dcb_visitors', discord: 'dcb_discord_clicks', manager: 'dcb_manager_clicks' };
-
-    // Increment visitor count once per session
-    if (!sessionStorage.getItem('dcb_counted')) {
-      const v = parseInt(localStorage.getItem(KEYS.visitors) || '0', 10) + 1;
-      localStorage.setItem(KEYS.visitors, v);
-      sessionStorage.setItem('dcb_counted', '1');
-    }
-
-    function updateDisplay() {
-      const visitors = localStorage.getItem(KEYS.visitors) || '0';
-      const discord  = localStorage.getItem(KEYS.discord) || '0';
-      const manager  = localStorage.getItem(KEYS.manager) || '0';
-
-      // Primary ticker counters
-      const vEl = document.querySelector('#ticker-visitors .counter-val');
-      const dEl = document.querySelector('#ticker-discord-clicks .counter-val');
-      const mEl = document.querySelector('#ticker-manager-clicks .counter-val');
-      if (vEl) vEl.textContent = visitors;
-      if (dEl) dEl.textContent = discord;
-      if (mEl) mEl.textContent = manager;
-
-      // Duplicate ticker counters (for seamless scroll)
-      document.querySelectorAll('.visitors-dup').forEach(el => el.textContent = visitors);
-      document.querySelectorAll('.discord-dup').forEach(el => el.textContent = discord);
-      document.querySelectorAll('.manager-dup').forEach(el => el.textContent = manager);
-    }
-
-    updateDisplay();
-
-    // Global click tracker called from button onclick
-    window.trackClick = function(type) {
-      const key = type === 'discord' ? KEYS.discord : KEYS.manager;
-      const val = parseInt(localStorage.getItem(key) || '0', 10) + 1;
-      localStorage.setItem(key, val);
-      updateDisplay();
-    };
-  })();
-</script>
-
-<!-- ━━━ GLOBAL NETWORK STATS — TICKER UPDATER ━━━ -->
+<!-- ━━━ UNIFIED GLOBAL STATS & TRACKING ━━━ -->
 <script>
 (function() {
   /* ═══════════════════════════════════════════════════════════════════
-   * DisCryptoBank Global Network Stats — Ticker
-   * ─────────────────────────────────────────────
-   * Fetches live global bot stats from the DisCryptoBank API and
-   * populates the scrolling ticker. Falls back to cached data in
-   * localStorage when the API is unreachable.
+   * DisCryptoBank — Unified Global Stats & Site Tracking
+   * ─────────────────────────────────────────────────────
+   * ALL ticker data (visitors, clicks, events, transactions, etc.)
+   * is fetched from the central API and stored in the same DB.
+   * Visitor/click events are POSTed to the API so counts are global
+   * across all browsers/devices, not per-browser localStorage.
    * ═══════════════════════════════════════════════════════════════════ */
 
-  var API_URL = 'https://discryptobank-api.up.railway.app/api/stats';
+  var API_BASE = 'https://discryptobank-api.up.railway.app';
+  var STATS_URL = API_BASE + '/api/stats';
+  var TRACK_URL = API_BASE + '/api/track';
   var CACHE_KEY = 'dcb_global_stats';
-  var REFRESH_INTERVAL = 120000; // refresh every 2 minutes
+  var REFRESH_INTERVAL = 120000; // 2 minutes
 
+  /* ── Formatters ── */
   function formatNumber(num) {
     if (num === null || num === undefined || isNaN(num)) return '—';
     if (num >= 1000000) return (num / 1000000).toFixed(2) + 'M';
@@ -1405,75 +1365,109 @@
     return '$' + num.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   }
 
-  function updateTickerStats(data) {
-    var events = formatNumber(data.eventsHosted);
+  /* ── Update all ticker elements from a stats object ── */
+  function updateTicker(data) {
+    var visitors     = formatNumber(data.siteVisitors);
+    var discordClk   = formatNumber(data.discordClicks);
+    var managerClk   = formatNumber(data.managerClicks);
+    var events       = formatNumber(data.eventsHosted);
     var transactions = formatNumber(data.totalTransactions);
-    var tasks = formatNumber(data.tasksCreated);
-    var paidOut = formatUSD(data.totalPaidOut);
-    var treasuryVal = formatUSD(data.treasuryWalletValue);
-    var userWalletVal = formatUSD(data.userWalletValue);
-    var walletVal = formatUSD(data.totalWalletValue);
-    var servers = formatNumber(data.activeServers);
-    var payouts = formatNumber(data.totalPayouts);
-    var totalUsers = formatNumber(data.totalUsers);
+    var tasks        = formatNumber(data.tasksCreated);
+    var paidOut      = formatUSD(data.totalPaidOut);
+    var treasuryVal  = formatUSD(data.treasuryWalletValue);
+    var userWalletVal= formatUSD(data.userWalletValue);
+    var walletVal    = formatUSD(data.totalWalletValue);
+    var servers      = formatNumber(data.activeServers);
+    var payouts      = formatNumber(data.totalPayouts);
+    var totalUsers   = formatNumber(data.totalUsers);
 
-    // Primary ticker
+    // Primary ticker counters
     var el;
-    el = document.querySelector('#ticker-events-hosted .counter-val'); if (el) el.textContent = events;
-    el = document.querySelector('#ticker-total-transactions .counter-val'); if (el) el.textContent = transactions;
-    el = document.querySelector('#ticker-tasks-created .counter-val'); if (el) el.textContent = tasks;
-    el = document.querySelector('#ticker-total-paid-out .counter-val'); if (el) el.textContent = paidOut;
-    el = document.querySelector('#ticker-treasury-value .counter-val'); if (el) el.textContent = treasuryVal;
+    el = document.querySelector('#ticker-visitors .counter-val');          if (el) el.textContent = visitors;
+    el = document.querySelector('#ticker-discord-clicks .counter-val');    if (el) el.textContent = discordClk;
+    el = document.querySelector('#ticker-manager-clicks .counter-val');    if (el) el.textContent = managerClk;
+    el = document.querySelector('#ticker-events-hosted .counter-val');     if (el) el.textContent = events;
+    el = document.querySelector('#ticker-total-transactions .counter-val');if (el) el.textContent = transactions;
+    el = document.querySelector('#ticker-tasks-created .counter-val');     if (el) el.textContent = tasks;
+    el = document.querySelector('#ticker-total-paid-out .counter-val');    if (el) el.textContent = paidOut;
+    el = document.querySelector('#ticker-treasury-value .counter-val');    if (el) el.textContent = treasuryVal;
     el = document.querySelector('#ticker-user-wallet-value .counter-val'); if (el) el.textContent = userWalletVal;
-    el = document.querySelector('#ticker-wallet-value .counter-val'); if (el) el.textContent = walletVal;
-    el = document.querySelector('#ticker-servers .counter-val'); if (el) el.textContent = servers;
-    el = document.querySelector('#ticker-payouts .counter-val'); if (el) el.textContent = payouts;
-    el = document.querySelector('#ticker-total-users .counter-val'); if (el) el.textContent = totalUsers;
+    el = document.querySelector('#ticker-wallet-value .counter-val');      if (el) el.textContent = walletVal;
+    el = document.querySelector('#ticker-servers .counter-val');           if (el) el.textContent = servers;
+    el = document.querySelector('#ticker-payouts .counter-val');           if (el) el.textContent = payouts;
+    el = document.querySelector('#ticker-total-users .counter-val');       if (el) el.textContent = totalUsers;
 
-    // Duplicate ticker (seamless scroll)
-    document.querySelectorAll('.events-dup').forEach(function(e) { e.textContent = events; });
+    // Duplicate ticker counters (seamless scroll loop)
+    document.querySelectorAll('.visitors-dup').forEach(function(e)     { e.textContent = visitors; });
+    document.querySelectorAll('.discord-dup').forEach(function(e)      { e.textContent = discordClk; });
+    document.querySelectorAll('.manager-dup').forEach(function(e)      { e.textContent = managerClk; });
+    document.querySelectorAll('.events-dup').forEach(function(e)       { e.textContent = events; });
     document.querySelectorAll('.transactions-dup').forEach(function(e) { e.textContent = transactions; });
-    document.querySelectorAll('.tasks-dup').forEach(function(e) { e.textContent = tasks; });
-    document.querySelectorAll('.paidout-dup').forEach(function(e) { e.textContent = paidOut; });
-    document.querySelectorAll('.treasury-dup').forEach(function(e) { e.textContent = treasuryVal; });
-    document.querySelectorAll('.userwallets-dup').forEach(function(e) { e.textContent = userWalletVal; });
-    document.querySelectorAll('.wallet-dup').forEach(function(e) { e.textContent = walletVal; });
-    document.querySelectorAll('.servers-dup').forEach(function(e) { e.textContent = servers; });
-    document.querySelectorAll('.payouts-dup').forEach(function(e) { e.textContent = payouts; });
-    document.querySelectorAll('.users-dup').forEach(function(e) { e.textContent = totalUsers; });
+    document.querySelectorAll('.tasks-dup').forEach(function(e)        { e.textContent = tasks; });
+    document.querySelectorAll('.paidout-dup').forEach(function(e)      { e.textContent = paidOut; });
+    document.querySelectorAll('.treasury-dup').forEach(function(e)     { e.textContent = treasuryVal; });
+    document.querySelectorAll('.userwallets-dup').forEach(function(e)  { e.textContent = userWalletVal; });
+    document.querySelectorAll('.wallet-dup').forEach(function(e)       { e.textContent = walletVal; });
+    document.querySelectorAll('.servers-dup').forEach(function(e)      { e.textContent = servers; });
+    document.querySelectorAll('.payouts-dup').forEach(function(e)      { e.textContent = payouts; });
+    document.querySelectorAll('.users-dup').forEach(function(e)        { e.textContent = totalUsers; });
   }
 
-  // Load cached stats from localStorage (instant display)
+  /* ── Load cached stats from localStorage (instant display) ── */
   function loadCachedStats() {
     try {
       var raw = localStorage.getItem(CACHE_KEY);
-      if (raw) { updateTickerStats(JSON.parse(raw)); }
+      if (raw) updateTicker(JSON.parse(raw));
     } catch(e) { /* ignore */ }
   }
 
-  // Fetch fresh stats from the API
+  /* ── Fetch fresh stats from the central API ── */
   function fetchStats() {
-    fetch(API_URL, { mode: 'cors' })
+    fetch(STATS_URL, { mode: 'cors' })
       .then(function(res) {
         if (!res.ok) throw new Error('API returned ' + res.status);
         return res.json();
       })
       .then(function(data) {
-        updateTickerStats(data);
-        // Cache in localStorage for offline/fallback
+        updateTicker(data);
         try { localStorage.setItem(CACHE_KEY, JSON.stringify(data)); } catch(e) {}
       })
       .catch(function(err) {
-        console.warn('[DCB Stats] API fetch failed, using cached data:', err.message);
+        console.warn('[DCB] API fetch failed, using cache:', err.message);
         loadCachedStats();
       });
   }
 
-  // Show cached stats immediately, then fetch fresh data
+  /* ── Fire-and-forget POST to track an event in the central DB ── */
+  function trackEvent(event) {
+    try {
+      fetch(TRACK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ event: event }),
+        mode: 'cors',
+        keepalive: true  // ensure request completes even on page unload
+      }).catch(function() {}); // silent fail
+    } catch(e) { /* ignore */ }
+  }
+
+  /* ── Track page visit (once per session, globally in the DB) ── */
+  if (!sessionStorage.getItem('dcb_counted')) {
+    trackEvent('site_visitors');
+    sessionStorage.setItem('dcb_counted', '1');
+  }
+
+  /* ── Global click handler called from button onclick attributes ── */
+  window.trackClick = function(type) {
+    if (type === 'discord') trackEvent('discord_clicks');
+    else if (type === 'manager') trackEvent('manager_clicks');
+    // Re-fetch stats after a short delay so the ticker updates
+    setTimeout(fetchStats, 1500);
+  };
+
+  /* ── Initialize ── */
   loadCachedStats();
   fetchStats();
-
-  // Auto-refresh stats periodically
   setInterval(fetchStats, REFRESH_INTERVAL);
 })();
 </script>
