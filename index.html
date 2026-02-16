@@ -1331,7 +1331,7 @@
 <!-- ━━━ VISITOR & CLICK TRACKING (via central API) ━━━ -->
 <script>
   (function() {
-    const TRACK_URL = 'https://discryptobank-api.up.railway.app/api/track';
+    const TRACK_URL = 'https://dcb-payroll-backend-production.up.railway.app/api/track';
 
     // Track visitor once per session
     if (!sessionStorage.getItem('dcb_counted')) {
@@ -1404,7 +1404,7 @@
   // The bot backend must expose GET /api/stats returning the JSON above.
   // This endpoint aggregates data across ALL servers/guilds where the
   // bot is installed — not just your own server.
-  const DCB_API_BASE = 'https://discryptobank-api.up.railway.app';
+  const DCB_API_BASE = 'https://dcb-payroll-backend-production.up.railway.app';
   const STATS_ENDPOINT = DCB_API_BASE + '/api/stats';
   const POLL_INTERVAL_MS = 30000; // 30 seconds
   const CACHE_KEY = 'dcb_live_stats';
