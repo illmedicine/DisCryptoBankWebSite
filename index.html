@@ -1331,13 +1331,16 @@
   (function() {
     const TRACK_URL = 'https://dcb-payroll-backend-production.up.railway.app/api/track';
 
-    // Track visitor once per session
-    if (!sessionStorage.getItem('dcb_counted')) {
-      sessionStorage.setItem('dcb_counted', '1');
+    // Track visitor ONCE per browser (lifetime unique visitors)
+    if (!localStorage.getItem('dcb_visitor_counted')) {
+      localStorage.setItem('dcb_visitor_counted', '1');
       fetch(TRACK_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ metric: 'site_visitors' })
+      }).then(() => {
+        // Immediately refresh stats so visitor sees their own visit counted
+        if (typeof window._dcbRefreshStats === 'function') window._dcbRefreshStats();
       }).catch(() => {});
     }
 
@@ -1348,6 +1351,9 @@
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ metric })
+      }).then(() => {
+        // Immediately refresh stats so click is reflected in ticker
+        if (typeof window._dcbRefreshStats === 'function') window._dcbRefreshStats();
       }).catch(() => {});
     };
   })();
@@ -1404,7 +1410,7 @@
   // bot is installed — not just your own server.
   const DCB_API_BASE = 'https://dcb-payroll-backend-production.up.railway.app';
   const STATS_ENDPOINT = DCB_API_BASE + '/api/stats';
-  const POLL_INTERVAL_MS = 30000; // 30 seconds
+  const POLL_INTERVAL_MS = 15000; // 15 seconds for near real-time
   const CACHE_KEY = 'dcb_live_stats';
   const CACHE_TTL_MS = 60000; // 1 minute cache fallback
 
@@ -1439,56 +1445,99 @@
     return Math.floor(diff / 86400000) + 'd ago';
   }
 
+  // ── ANIMATED COUNTER (smooth incremental transitions) ─────────────
+  // Tracks previous raw values so we can animate number changes
+  let _prevData = null;
+
+  function animateValue(el, startVal, endVal, formatter, duration) {
+    if (startVal === endVal) { el.textContent = formatter(endVal); return; }
+    const startTime = performance.now();
+    const isNumeric = typeof startVal === 'number' && typeof endVal === 'number' && isFinite(startVal) && isFinite(endVal);
+    if (!isNumeric) { el.textContent = formatter(endVal); return; }
+
+    function tick(now) {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      // ease-out quad
+      const eased = 1 - (1 - progress) * (1 - progress);
+      const current = startVal + (endVal - startVal) * eased;
+      // For integers, round; for decimals, keep precision
+      const display = Number.isInteger(endVal) ? Math.round(current) : current;
+      el.textContent = formatter(display);
+      if (progress < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
   // ── DOM UPDATER ────────────────────────────────────────────────────
   function updateAllDisplays(data) {
-    const treasuryWallets = formatNumber(data.treasuryWalletsConnected);
-    const userWallets = formatNumber(data.userWalletsConnected);
-    const events = formatNumber(data.eventsHosted);
-    const transactions = formatNumber(data.totalTransactions);
-    const voteEvents = formatNumber(data.voteEventsCreated);
-    const paidOut = formatUSD(data.totalPaidOut);
-    const treasuryVal = formatSOL(data.treasuryWalletValueSOL);
-    const userWalletVal = formatSOL(data.userWalletValueSOL);
-    const servers = formatNumber(data.activeServers);
-    const payouts = formatNumber(data.totalPayouts);
-    const totalUsers = formatNumber(data.totalUsers);
-    const visitors = formatNumber(data.siteVisitors);
-    const commandsRun = formatNumber(data.totalCommandsRun);
-    const managerClicks = formatNumber(data.managerClicks);
+    const ANIM_DURATION = 1200; // ms for counter animation
+    const prev = _prevData || {};
 
-    // ── Scrolling Ticker (primary) ──
-    const map = {
-      'ticker-treasury-wallets': treasuryWallets,
-      'ticker-user-wallets': userWallets,
-      'ticker-total-paid-out': paidOut,
-      'ticker-treasury-value': treasuryVal,
-      'ticker-user-wallet-value': userWalletVal,
-      'ticker-total-transactions': transactions,
-      'ticker-events-hosted': events,
-      'ticker-vote-events': voteEvents,
-      'ticker-servers': servers,
-      'ticker-payouts': payouts,
-      'ticker-total-users': totalUsers,
-      'ticker-visitors': visitors,
-      'ticker-commands-run': commandsRun,
-      'ticker-manager-clicks': managerClicks,
+    // Field definitions: [dataKey, formatter]
+    const fields = {
+      treasuryWallets:  ['treasuryWalletsConnected', formatNumber],
+      userWallets:      ['userWalletsConnected',     formatNumber],
+      paidOut:          ['totalPaidOut',              formatUSD],
+      treasuryVal:      ['treasuryWalletValueSOL',   formatSOL],
+      userWalletVal:    ['userWalletValueSOL',        formatSOL],
+      transactions:     ['totalTransactions',         formatNumber],
+      events:           ['eventsHosted',              formatNumber],
+      voteEvents:       ['voteEventsCreated',         formatNumber],
+      servers:          ['activeServers',             formatNumber],
+      payouts:          ['totalPayouts',              formatNumber],
+      totalUsers:       ['totalUsers',                formatNumber],
+      visitors:         ['siteVisitors',              formatNumber],
+      commandsRun:      ['totalCommandsRun',          formatNumber],
+      managerClicks:    ['managerClicks',             formatNumber],
     };
-    for (const [id, val] of Object.entries(map)) {
-      const el = document.querySelector('#' + id + ' .counter-val');
-      if (el) el.textContent = val;
-    }
 
-    // ── Duplicates for seamless loop ──
+    // Build id→dataKey and dup→dataKey maps
+    const idMap = {
+      'ticker-treasury-wallets': 'treasuryWallets',
+      'ticker-user-wallets':     'userWallets',
+      'ticker-total-paid-out':   'paidOut',
+      'ticker-treasury-value':   'treasuryVal',
+      'ticker-user-wallet-value':'userWalletVal',
+      'ticker-total-transactions':'transactions',
+      'ticker-events-hosted':    'events',
+      'ticker-vote-events':      'voteEvents',
+      'ticker-servers':          'servers',
+      'ticker-payouts':          'payouts',
+      'ticker-total-users':      'totalUsers',
+      'ticker-visitors':         'visitors',
+      'ticker-commands-run':     'commandsRun',
+      'ticker-manager-clicks':   'managerClicks',
+    };
     const dupMap = {
-      'treasury-wallets-dup': treasuryWallets, 'user-wallets-dup': userWallets,
-      'paidout-dup': paidOut, 'treasury-dup': treasuryVal, 'userbalance-dup': userWalletVal,
-      'transactions-dup': transactions, 'events-dup': events,
-      'vote-events-dup': voteEvents, 'servers-dup': servers, 'payouts-dup': payouts, 'users-dup': totalUsers,
-      'visitors-dup': visitors, 'commands-run-dup': commandsRun, 'manager-dup': managerClicks,
+      'treasury-wallets-dup': 'treasuryWallets', 'user-wallets-dup': 'userWallets',
+      'paidout-dup': 'paidOut', 'treasury-dup': 'treasuryVal', 'userbalance-dup': 'userWalletVal',
+      'transactions-dup': 'transactions', 'events-dup': 'events',
+      'vote-events-dup': 'voteEvents', 'servers-dup': 'servers', 'payouts-dup': 'payouts', 'users-dup': 'totalUsers',
+      'visitors-dup': 'visitors', 'commands-run-dup': 'commandsRun', 'manager-dup': 'managerClicks',
     };
-    for (const [cls, val] of Object.entries(dupMap)) {
-      document.querySelectorAll('.' + cls).forEach(el => el.textContent = val);
+
+    // Animate primary ticker elements
+    for (const [id, fieldKey] of Object.entries(idMap)) {
+      const el = document.querySelector('#' + id + ' .counter-val');
+      if (!el) continue;
+      const [dataKey, fmt] = fields[fieldKey];
+      const oldVal = prev[dataKey] ?? 0;
+      const newVal = data[dataKey] ?? 0;
+      animateValue(el, oldVal, newVal, fmt, ANIM_DURATION);
     }
+
+    // Animate duplicate elements
+    for (const [cls, fieldKey] of Object.entries(dupMap)) {
+      const [dataKey, fmt] = fields[fieldKey];
+      const oldVal = prev[dataKey] ?? 0;
+      const newVal = data[dataKey] ?? 0;
+      document.querySelectorAll('.' + cls).forEach(el => {
+        animateValue(el, oldVal, newVal, fmt, ANIM_DURATION);
+      });
+    }
+
+    _prevData = { ...data };
   }
 
   // ── CACHE (localStorage fallback) ──────────────────────────────────
@@ -1547,13 +1596,16 @@
   // First fetch on page load
   fetchStats();
 
-  // Poll every 30 seconds
+  // Poll for near real-time updates
   setInterval(fetchStats, POLL_INTERVAL_MS);
 
   // Refresh when tab becomes visible
   document.addEventListener('visibilitychange', function() {
     if (!document.hidden) fetchStats();
   });
+
+  // Expose refresh function so tracking code can trigger immediate update
+  window._dcbRefreshStats = fetchStats;
 })();
 </script>
 
