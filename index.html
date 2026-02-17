@@ -633,12 +633,12 @@
     <span class="scroll-item ticker-stat-green" id="ticker-treasury-wallets"><span class="icon">🏦</span> <span class="counter-val">—</span> Treasury Wallets</span>
     <span class="scroll-item ticker-stat-purple" id="ticker-user-wallets"><span class="icon">👛</span> <span class="counter-val">—</span> User Wallets</span>
     <span class="scroll-item ticker-stat-rose" id="ticker-total-paid-out"><span class="icon">💸</span> <span class="counter-val">—</span> Total Paid Out</span>
-    <span class="scroll-item ticker-stat-gold" id="ticker-treasury-value"><span class="icon">💰</span> <span class="counter-val">—</span> Treasury Balance</span>
-    <span class="scroll-item ticker-stat-green" id="ticker-user-wallet-value"><span class="icon">💎</span> <span class="counter-val">—</span> User Balance</span>
+    <span class="scroll-item ticker-stat-gold" id="ticker-treasury-value"><span class="icon">💰</span> <span class="counter-val">—</span> Combined Treasury Balance</span>
+    <span class="scroll-item ticker-stat-green" id="ticker-user-wallet-value"><span class="icon">💎</span> <span class="counter-val">—</span> Combined User Balance</span>
     <span class="scroll-item ticker-stat-gold" id="ticker-wallet-value"><span class="icon">🏆</span> <span class="counter-val">—</span> Combined Balance</span>
     <span class="scroll-item ticker-stat-purple" id="ticker-total-transactions"><span class="icon">📊</span> <span class="counter-val">—</span> Total Transactions</span>
     <span class="scroll-item ticker-stat-gold" id="ticker-events-hosted"><span class="icon">🎉</span> <span class="counter-val">—</span> Events Hosted</span>
-    <span class="scroll-item ticker-stat" id="ticker-tasks-created"><span class="icon">📋</span> <span class="counter-val">—</span> Tasks Created</span>
+    <span class="scroll-item ticker-stat" id="ticker-vote-events"><span class="icon">🗳️</span> <span class="counter-val">—</span> Vote Events Created</span>
     <span class="scroll-item ticker-stat-green" id="ticker-servers"><span class="icon">🌐</span> <span class="counter-val">—</span> Active Servers</span>
     <span class="scroll-item ticker-stat" id="ticker-payouts"><span class="icon">⚡</span> <span class="counter-val">—</span> Payouts Made</span>
     <span class="scroll-item ticker-stat-purple" id="ticker-total-users"><span class="icon">👥</span> <span class="counter-val">—</span> Total Users</span>
@@ -649,12 +649,12 @@
     <span class="scroll-item ticker-stat-green"><span class="icon">🏦</span> <span class="counter-val-dup treasury-wallets-dup">—</span> Treasury Wallets</span>
     <span class="scroll-item ticker-stat-purple"><span class="icon">👛</span> <span class="counter-val-dup user-wallets-dup">—</span> User Wallets</span>
     <span class="scroll-item ticker-stat-rose"><span class="icon">💸</span> <span class="counter-val-dup paidout-dup">—</span> Total Paid Out</span>
-    <span class="scroll-item ticker-stat-gold"><span class="icon">💰</span> <span class="counter-val-dup treasury-dup">—</span> Treasury Balance</span>
-    <span class="scroll-item ticker-stat-green"><span class="icon">💎</span> <span class="counter-val-dup userbalance-dup">—</span> User Balance</span>
+    <span class="scroll-item ticker-stat-gold"><span class="icon">💰</span> <span class="counter-val-dup treasury-dup">—</span> Combined Treasury Balance</span>
+    <span class="scroll-item ticker-stat-green"><span class="icon">💎</span> <span class="counter-val-dup userbalance-dup">—</span> Combined User Balance</span>
     <span class="scroll-item ticker-stat-gold"><span class="icon">🏆</span> <span class="counter-val-dup wallet-dup">—</span> Combined Balance</span>
     <span class="scroll-item ticker-stat-purple"><span class="icon">📊</span> <span class="counter-val-dup transactions-dup">—</span> Total Transactions</span>
     <span class="scroll-item ticker-stat-gold"><span class="icon">🎉</span> <span class="counter-val-dup events-dup">—</span> Events Hosted</span>
-    <span class="scroll-item ticker-stat"><span class="icon">📋</span> <span class="counter-val-dup tasks-dup">—</span> Tasks Created</span>
+    <span class="scroll-item ticker-stat"><span class="icon">�️</span> <span class="counter-val-dup vote-events-dup">—</span> Vote Events Created</span>
     <span class="scroll-item ticker-stat-green"><span class="icon">🌐</span> <span class="counter-val-dup servers-dup">—</span> Active Servers</span>
     <span class="scroll-item ticker-stat"><span class="icon">⚡</span> <span class="counter-val-dup payouts-dup">—</span> Payouts Made</span>
     <span class="scroll-item ticker-stat-purple"><span class="icon">👥</span> <span class="counter-val-dup users-dup">—</span> Total Users</span>
@@ -1425,6 +1425,13 @@
     return '$' + num.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   }
 
+  function formatSOL(num) {
+    if (num === null || num === undefined || isNaN(num)) return '—';
+    if (num >= 1000000) return (num / 1000000).toFixed(2) + 'M SOL';
+    if (num >= 1000) return (num / 1000).toFixed(1) + 'K SOL';
+    return num.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 4 }) + ' SOL';
+  }
+
   function timeAgo(isoString) {
     if (!isoString) return 'just now';
     const diff = Date.now() - new Date(isoString).getTime();
@@ -1440,11 +1447,11 @@
     const userWallets = formatNumber(data.userWalletsConnected);
     const events = formatNumber(data.eventsHosted);
     const transactions = formatNumber(data.totalTransactions);
-    const tasks = formatNumber(data.tasksCreated);
+    const voteEvents = formatNumber(data.voteEventsCreated);
     const paidOut = formatUSD(data.totalPaidOut);
-    const treasuryVal = formatUSD(data.treasuryWalletValue);
-    const userWalletVal = formatUSD(data.userWalletValue);
-    const walletVal = formatUSD(data.totalWalletValue);
+    const treasuryVal = formatSOL(data.treasuryWalletValueSOL);
+    const userWalletVal = formatSOL(data.userWalletValueSOL);
+    const walletVal = formatSOL(data.totalWalletValueSOL);
     const servers = formatNumber(data.activeServers);
     const payouts = formatNumber(data.totalPayouts);
     const totalUsers = formatNumber(data.totalUsers);
@@ -1462,7 +1469,7 @@
       'ticker-wallet-value': walletVal,
       'ticker-total-transactions': transactions,
       'ticker-events-hosted': events,
-      'ticker-tasks-created': tasks,
+      'ticker-vote-events': voteEvents,
       'ticker-servers': servers,
       'ticker-payouts': payouts,
       'ticker-total-users': totalUsers,
@@ -1480,7 +1487,7 @@
       'treasury-wallets-dup': treasuryWallets, 'user-wallets-dup': userWallets,
       'paidout-dup': paidOut, 'treasury-dup': treasuryVal, 'userbalance-dup': userWalletVal,
       'wallet-dup': walletVal, 'transactions-dup': transactions, 'events-dup': events,
-      'tasks-dup': tasks, 'servers-dup': servers, 'payouts-dup': payouts, 'users-dup': totalUsers,
+      'vote-events-dup': voteEvents, 'servers-dup': servers, 'payouts-dup': payouts, 'users-dup': totalUsers,
       'visitors-dup': visitors, 'discord-dup': discordClicks, 'manager-dup': managerClicks,
     };
     for (const [cls, val] of Object.entries(dupMap)) {
@@ -1491,7 +1498,7 @@
   // ── CACHE (localStorage fallback) ──────────────────────────────────
   // Seed data shown when the API is unreachable (Railway down, first visit, etc.)
   const SEED_STATS = {
-    totalTransactions: 0, eventsHosted: 0, tasksCreated: 0,
+    totalTransactions: 0, eventsHosted: 0, tasksCreated: 0, voteEventsCreated: 0,
     totalPaidOut: 0, treasuryWalletValue: 0, userWalletValue: 0,
     totalWalletValue: 0, treasuryWalletsConnected: 0, userWalletsConnected: 0,
     activeServers: 0, totalPayouts: 0, totalUsers: 0,
