@@ -639,8 +639,7 @@
     <span class="scroll-item ticker-stat" id="ticker-vote-events"><span class="icon">🗳️</span> <span class="counter-val">—</span> Vote Events Created</span>
     <span class="scroll-item ticker-stat-green" id="ticker-servers"><span class="icon">🌐</span> <span class="counter-val">—</span> Active Servers</span>
     <span class="scroll-item ticker-stat" id="ticker-payouts"><span class="icon">⚡</span> <span class="counter-val">—</span> Payouts Made</span>
-    <span class="scroll-item ticker-stat-purple" id="ticker-total-users"><span class="icon">👥</span> <span class="counter-val">—</span> Total Users</span>
-    <span class="scroll-item ticker-stat" id="ticker-visitors"><span class="icon">👁️</span> <span class="counter-val">0</span> Site Visitors</span>
+    <span class="scroll-item ticker-stat-purple" id="ticker-bot-users"><span class="icon">👥</span> <span class="counter-val">0</span> DCB Bot Users</span>
     <span class="scroll-item ticker-stat" id="ticker-commands-run"><span class="icon">🤖</span> <span class="counter-val">0</span> Commands Run</span>
     <span class="scroll-item ticker-stat" id="ticker-manager-clicks"><span class="icon">🚀</span> <span class="counter-val">0</span> Manager Clicks</span>
     <!-- duplicate set for seamless loop -->
@@ -653,8 +652,7 @@
     <span class="scroll-item ticker-stat"><span class="icon">�️</span> <span class="counter-val-dup vote-events-dup">—</span> Vote Events Created</span>
     <span class="scroll-item ticker-stat-green"><span class="icon">🌐</span> <span class="counter-val-dup servers-dup">—</span> Active Servers</span>
     <span class="scroll-item ticker-stat"><span class="icon">⚡</span> <span class="counter-val-dup payouts-dup">—</span> Payouts Made</span>
-    <span class="scroll-item ticker-stat-purple"><span class="icon">👥</span> <span class="counter-val-dup users-dup">—</span> Total Users</span>
-    <span class="scroll-item ticker-stat"><span class="icon">👁️</span> <span class="counter-val-dup visitors-dup">0</span> Site Visitors</span>
+    <span class="scroll-item ticker-stat-purple"><span class="icon">👥</span> <span class="counter-val-dup bot-users-dup">0</span> DCB Bot Users</span>
     <span class="scroll-item ticker-stat"><span class="icon">🤖</span> <span class="counter-val-dup commands-run-dup">0</span> Commands Run</span>
     <span class="scroll-item ticker-stat"><span class="icon">🚀</span> <span class="counter-val-dup manager-dup">0</span> Manager Clicks</span>
   </div>
@@ -1329,19 +1327,6 @@
   (function() {
     const TRACK_URL = 'https://dcb-payroll-backend-production.up.railway.app/api/track';
 
-    // Track visitor ONCE per browser (lifetime unique visitors)
-    if (!localStorage.getItem('dcb_visitor_counted')) {
-      localStorage.setItem('dcb_visitor_counted', '1');
-      fetch(TRACK_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ metric: 'site_visitors' })
-      }).then(() => {
-        // Immediately refresh stats so visitor sees their own visit counted
-        if (typeof window._dcbRefreshStats === 'function') window._dcbRefreshStats();
-      }).catch(() => {});
-    }
-
     // Global click tracker called from button onclick
     window.trackClick = function(type) {
       const metric = type === 'discord' ? 'discord_clicks' : 'manager_clicks';
@@ -1472,6 +1457,9 @@
     const ANIM_DURATION = 1200; // ms for counter animation
     const prev = _prevData || {};
 
+    // Compute combined DCB Bot Users (servers + registered users)
+    data.dcbBotUsers = (data.activeServers || 0) + (data.totalUsers || 0);
+
     // Field definitions: [dataKey, formatter]
     const fields = {
       treasuryWallets:  ['treasuryWalletsConnected', formatNumber],
@@ -1483,8 +1471,7 @@
       voteEvents:       ['voteEventsCreated',         formatNumber],
       servers:          ['activeServers',             formatNumber],
       payouts:          ['totalPayouts',              formatNumber],
-      totalUsers:       ['totalUsers',                formatNumber],
-      visitors:         ['siteVisitors',              formatNumber],
+      botUsers:         ['dcbBotUsers',               formatNumber],
       commandsRun:      ['totalCommandsRun',          formatNumber],
       managerClicks:    ['managerClicks',             formatNumber],
     };
@@ -1500,8 +1487,7 @@
       'ticker-vote-events':      'voteEvents',
       'ticker-servers':          'servers',
       'ticker-payouts':          'payouts',
-      'ticker-total-users':      'totalUsers',
-      'ticker-visitors':         'visitors',
+      'ticker-bot-users':        'botUsers',
       'ticker-commands-run':     'commandsRun',
       'ticker-manager-clicks':   'managerClicks',
     };
@@ -1509,8 +1495,8 @@
       'treasury-wallets-dup': 'treasuryWallets', 'user-wallets-dup': 'userWallets',
       'paidout-dup': 'paidOut', 'treasury-dup': 'treasuryVal',
       'transactions-dup': 'transactions', 'events-dup': 'events',
-      'vote-events-dup': 'voteEvents', 'servers-dup': 'servers', 'payouts-dup': 'payouts', 'users-dup': 'totalUsers',
-      'visitors-dup': 'visitors', 'commands-run-dup': 'commandsRun', 'manager-dup': 'managerClicks',
+      'vote-events-dup': 'voteEvents', 'servers-dup': 'servers', 'payouts-dup': 'payouts',
+      'bot-users-dup': 'botUsers', 'commands-run-dup': 'commandsRun', 'manager-dup': 'managerClicks',
     };
 
     // Animate primary ticker elements
