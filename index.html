@@ -634,7 +634,7 @@
     <span class="scroll-item ticker-stat-purple" id="ticker-user-wallets"><span class="icon">👛</span> <span class="counter-val">—</span> User Wallets</span>
     <span class="scroll-item ticker-stat-rose" id="ticker-total-paid-out"><span class="icon">💸</span> <span class="counter-val">—</span> Total Prize Pool</span>
     <span class="scroll-item ticker-stat-gold" id="ticker-treasury-value"><span class="icon">💰</span> <span class="counter-val">—</span> Combined Treasury Balance</span>
-    <span class="scroll-item ticker-stat-purple" id="ticker-total-transactions"><span class="icon">📊</span> <span class="counter-val">—</span> Total Transactions</span>
+    <span class="scroll-item ticker-stat-purple" id="ticker-total-transactions"><span class="icon">🏆</span> <span class="counter-val">—</span> Event Winners</span>
     <span class="scroll-item ticker-stat-gold" id="ticker-events-hosted"><span class="icon">🎉</span> <span class="counter-val">—</span> Events Hosted</span>
     <span class="scroll-item ticker-stat" id="ticker-vote-events"><span class="icon">🗳️</span> <span class="counter-val">—</span> Vote Events Created</span>
     <span class="scroll-item ticker-stat-green" id="ticker-servers"><span class="icon">🌐</span> <span class="counter-val">—</span> Active Servers</span>
@@ -648,7 +648,7 @@
     <span class="scroll-item ticker-stat-purple"><span class="icon">👛</span> <span class="counter-val-dup user-wallets-dup">—</span> User Wallets</span>
     <span class="scroll-item ticker-stat-rose"><span class="icon">💸</span> <span class="counter-val-dup paidout-dup">—</span> Total Prize Pool</span>
     <span class="scroll-item ticker-stat-gold"><span class="icon">💰</span> <span class="counter-val-dup treasury-dup">—</span> Combined Treasury Balance</span>
-    <span class="scroll-item ticker-stat-purple"><span class="icon">📊</span> <span class="counter-val-dup transactions-dup">—</span> Total Transactions</span>
+    <span class="scroll-item ticker-stat-purple"><span class="icon">🏆</span> <span class="counter-val-dup transactions-dup">—</span> Event Winners</span>
     <span class="scroll-item ticker-stat-gold"><span class="icon">🎉</span> <span class="counter-val-dup events-dup">—</span> Events Hosted</span>
     <span class="scroll-item ticker-stat"><span class="icon">�️</span> <span class="counter-val-dup vote-events-dup">—</span> Vote Events Created</span>
     <span class="scroll-item ticker-stat-green"><span class="icon">🌐</span> <span class="counter-val-dup servers-dup">—</span> Active Servers</span>
@@ -1478,7 +1478,7 @@
       userWallets:      ['userWalletsConnected',     formatNumber],
       paidOut:          ['totalPaidOut',              formatUSD],
       treasuryVal:      ['treasuryWalletValueSOL',   formatSOL],
-      transactions:     ['totalTransactions',         formatNumber],
+      transactions:     ['totalWinners',              formatNumber],
       events:           ['eventsHosted',              formatNumber],
       voteEvents:       ['voteEventsCreated',         formatNumber],
       servers:          ['activeServers',             formatNumber],
@@ -1539,7 +1539,7 @@
   // ── CACHE (localStorage fallback) ──────────────────────────────────
   // Seed data shown when the API is unreachable (Railway down, first visit, etc.)
   const SEED_STATS = {
-    totalTransactions: 0, eventsHosted: 0, tasksCreated: 0, voteEventsCreated: 0,
+    totalTransactions: 0, totalWinners: 0, eventsHosted: 0, tasksCreated: 0, voteEventsCreated: 0,
     totalPaidOut: 0, treasuryWalletValue: 0, userWalletValue: 0,
     totalWalletValue: 0, treasuryWalletsConnected: 0, userWalletsConnected: 0,
     activeServers: 0, totalPayouts: 0, totalUsers: 0,
