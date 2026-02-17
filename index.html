@@ -634,7 +634,6 @@
     <span class="scroll-item ticker-stat-purple" id="ticker-user-wallets"><span class="icon">👛</span> <span class="counter-val">—</span> User Wallets</span>
     <span class="scroll-item ticker-stat-rose" id="ticker-total-paid-out"><span class="icon">💸</span> <span class="counter-val">—</span> Total Prize Pool</span>
     <span class="scroll-item ticker-stat-gold" id="ticker-treasury-value"><span class="icon">💰</span> <span class="counter-val">—</span> Combined Treasury Balance</span>
-    <span class="scroll-item ticker-stat-green" id="ticker-user-wallet-value"><span class="icon">💎</span> <span class="counter-val">—</span> Combined User Balance</span>
     <span class="scroll-item ticker-stat-purple" id="ticker-total-transactions"><span class="icon">📊</span> <span class="counter-val">—</span> Total Transactions</span>
     <span class="scroll-item ticker-stat-gold" id="ticker-events-hosted"><span class="icon">🎉</span> <span class="counter-val">—</span> Events Hosted</span>
     <span class="scroll-item ticker-stat" id="ticker-vote-events"><span class="icon">🗳️</span> <span class="counter-val">—</span> Vote Events Created</span>
@@ -649,7 +648,6 @@
     <span class="scroll-item ticker-stat-purple"><span class="icon">👛</span> <span class="counter-val-dup user-wallets-dup">—</span> User Wallets</span>
     <span class="scroll-item ticker-stat-rose"><span class="icon">💸</span> <span class="counter-val-dup paidout-dup">—</span> Total Prize Pool</span>
     <span class="scroll-item ticker-stat-gold"><span class="icon">💰</span> <span class="counter-val-dup treasury-dup">—</span> Combined Treasury Balance</span>
-    <span class="scroll-item ticker-stat-green"><span class="icon">💎</span> <span class="counter-val-dup userbalance-dup">—</span> Combined User Balance</span>
     <span class="scroll-item ticker-stat-purple"><span class="icon">📊</span> <span class="counter-val-dup transactions-dup">—</span> Total Transactions</span>
     <span class="scroll-item ticker-stat-gold"><span class="icon">🎉</span> <span class="counter-val-dup events-dup">—</span> Events Hosted</span>
     <span class="scroll-item ticker-stat"><span class="icon">�️</span> <span class="counter-val-dup vote-events-dup">—</span> Vote Events Created</span>
@@ -1480,7 +1478,6 @@
       userWallets:      ['userWalletsConnected',     formatNumber],
       paidOut:          ['totalPaidOut',              formatUSD],
       treasuryVal:      ['treasuryWalletValueSOL',   formatSOL],
-      userWalletVal:    ['userWalletValueSOL',        formatSOL],
       transactions:     ['totalTransactions',         formatNumber],
       events:           ['eventsHosted',              formatNumber],
       voteEvents:       ['voteEventsCreated',         formatNumber],
@@ -1498,7 +1495,6 @@
       'ticker-user-wallets':     'userWallets',
       'ticker-total-paid-out':   'paidOut',
       'ticker-treasury-value':   'treasuryVal',
-      'ticker-user-wallet-value':'userWalletVal',
       'ticker-total-transactions':'transactions',
       'ticker-events-hosted':    'events',
       'ticker-vote-events':      'voteEvents',
@@ -1511,7 +1507,7 @@
     };
     const dupMap = {
       'treasury-wallets-dup': 'treasuryWallets', 'user-wallets-dup': 'userWallets',
-      'paidout-dup': 'paidOut', 'treasury-dup': 'treasuryVal', 'userbalance-dup': 'userWalletVal',
+      'paidout-dup': 'paidOut', 'treasury-dup': 'treasuryVal',
       'transactions-dup': 'transactions', 'events-dup': 'events',
       'vote-events-dup': 'voteEvents', 'servers-dup': 'servers', 'payouts-dup': 'payouts', 'users-dup': 'totalUsers',
       'visitors-dup': 'visitors', 'commands-run-dup': 'commandsRun', 'manager-dup': 'managerClicks',
