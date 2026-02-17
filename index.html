@@ -635,7 +635,6 @@
     <span class="scroll-item ticker-stat-rose" id="ticker-total-paid-out"><span class="icon">💸</span> <span class="counter-val">—</span> Total Prize Pool</span>
     <span class="scroll-item ticker-stat-gold" id="ticker-treasury-value"><span class="icon">💰</span> <span class="counter-val">—</span> Combined Treasury Balance</span>
     <span class="scroll-item ticker-stat-green" id="ticker-user-wallet-value"><span class="icon">💎</span> <span class="counter-val">—</span> Combined User Balance</span>
-    <span class="scroll-item ticker-stat-gold" id="ticker-wallet-value"><span class="icon">🏆</span> <span class="counter-val">—</span> Combined Balance</span>
     <span class="scroll-item ticker-stat-purple" id="ticker-total-transactions"><span class="icon">📊</span> <span class="counter-val">—</span> Total Transactions</span>
     <span class="scroll-item ticker-stat-gold" id="ticker-events-hosted"><span class="icon">🎉</span> <span class="counter-val">—</span> Events Hosted</span>
     <span class="scroll-item ticker-stat" id="ticker-vote-events"><span class="icon">🗳️</span> <span class="counter-val">—</span> Vote Events Created</span>
@@ -643,7 +642,7 @@
     <span class="scroll-item ticker-stat" id="ticker-payouts"><span class="icon">⚡</span> <span class="counter-val">—</span> Payouts Made</span>
     <span class="scroll-item ticker-stat-purple" id="ticker-total-users"><span class="icon">👥</span> <span class="counter-val">—</span> Total Users</span>
     <span class="scroll-item ticker-stat" id="ticker-visitors"><span class="icon">👁️</span> <span class="counter-val">0</span> Site Visitors</span>
-    <span class="scroll-item ticker-stat" id="ticker-discord-clicks"><span class="icon">🤖</span> <span class="counter-val">0</span> Discord Clicks</span>
+    <span class="scroll-item ticker-stat" id="ticker-commands-run"><span class="icon">🤖</span> <span class="counter-val">0</span> Commands Run</span>
     <span class="scroll-item ticker-stat" id="ticker-manager-clicks"><span class="icon">🚀</span> <span class="counter-val">0</span> Manager Clicks</span>
     <!-- duplicate set for seamless loop -->
     <span class="scroll-item ticker-stat-green"><span class="icon">🏦</span> <span class="counter-val-dup treasury-wallets-dup">—</span> Treasury Wallets</span>
@@ -651,7 +650,6 @@
     <span class="scroll-item ticker-stat-rose"><span class="icon">💸</span> <span class="counter-val-dup paidout-dup">—</span> Total Prize Pool</span>
     <span class="scroll-item ticker-stat-gold"><span class="icon">💰</span> <span class="counter-val-dup treasury-dup">—</span> Combined Treasury Balance</span>
     <span class="scroll-item ticker-stat-green"><span class="icon">💎</span> <span class="counter-val-dup userbalance-dup">—</span> Combined User Balance</span>
-    <span class="scroll-item ticker-stat-gold"><span class="icon">🏆</span> <span class="counter-val-dup wallet-dup">—</span> Combined Balance</span>
     <span class="scroll-item ticker-stat-purple"><span class="icon">📊</span> <span class="counter-val-dup transactions-dup">—</span> Total Transactions</span>
     <span class="scroll-item ticker-stat-gold"><span class="icon">🎉</span> <span class="counter-val-dup events-dup">—</span> Events Hosted</span>
     <span class="scroll-item ticker-stat"><span class="icon">�️</span> <span class="counter-val-dup vote-events-dup">—</span> Vote Events Created</span>
@@ -659,7 +657,7 @@
     <span class="scroll-item ticker-stat"><span class="icon">⚡</span> <span class="counter-val-dup payouts-dup">—</span> Payouts Made</span>
     <span class="scroll-item ticker-stat-purple"><span class="icon">👥</span> <span class="counter-val-dup users-dup">—</span> Total Users</span>
     <span class="scroll-item ticker-stat"><span class="icon">👁️</span> <span class="counter-val-dup visitors-dup">0</span> Site Visitors</span>
-    <span class="scroll-item ticker-stat"><span class="icon">🤖</span> <span class="counter-val-dup discord-dup">0</span> Discord Clicks</span>
+    <span class="scroll-item ticker-stat"><span class="icon">🤖</span> <span class="counter-val-dup commands-run-dup">0</span> Commands Run</span>
     <span class="scroll-item ticker-stat"><span class="icon">🚀</span> <span class="counter-val-dup manager-dup">0</span> Manager Clicks</span>
   </div>
 </div>
@@ -1451,12 +1449,11 @@
     const paidOut = formatUSD(data.totalPaidOut);
     const treasuryVal = formatSOL(data.treasuryWalletValueSOL);
     const userWalletVal = formatSOL(data.userWalletValueSOL);
-    const walletVal = formatSOL(data.totalWalletValueSOL);
     const servers = formatNumber(data.activeServers);
     const payouts = formatNumber(data.totalPayouts);
     const totalUsers = formatNumber(data.totalUsers);
     const visitors = formatNumber(data.siteVisitors);
-    const discordClicks = formatNumber(data.discordClicks);
+    const commandsRun = formatNumber(data.totalCommandsRun);
     const managerClicks = formatNumber(data.managerClicks);
 
     // ── Scrolling Ticker (primary) ──
@@ -1466,7 +1463,6 @@
       'ticker-total-paid-out': paidOut,
       'ticker-treasury-value': treasuryVal,
       'ticker-user-wallet-value': userWalletVal,
-      'ticker-wallet-value': walletVal,
       'ticker-total-transactions': transactions,
       'ticker-events-hosted': events,
       'ticker-vote-events': voteEvents,
@@ -1474,7 +1470,7 @@
       'ticker-payouts': payouts,
       'ticker-total-users': totalUsers,
       'ticker-visitors': visitors,
-      'ticker-discord-clicks': discordClicks,
+      'ticker-commands-run': commandsRun,
       'ticker-manager-clicks': managerClicks,
     };
     for (const [id, val] of Object.entries(map)) {
@@ -1486,9 +1482,9 @@
     const dupMap = {
       'treasury-wallets-dup': treasuryWallets, 'user-wallets-dup': userWallets,
       'paidout-dup': paidOut, 'treasury-dup': treasuryVal, 'userbalance-dup': userWalletVal,
-      'wallet-dup': walletVal, 'transactions-dup': transactions, 'events-dup': events,
+      'transactions-dup': transactions, 'events-dup': events,
       'vote-events-dup': voteEvents, 'servers-dup': servers, 'payouts-dup': payouts, 'users-dup': totalUsers,
-      'visitors-dup': visitors, 'discord-dup': discordClicks, 'manager-dup': managerClicks,
+      'visitors-dup': visitors, 'commands-run-dup': commandsRun, 'manager-dup': managerClicks,
     };
     for (const [cls, val] of Object.entries(dupMap)) {
       document.querySelectorAll('.' + cls).forEach(el => el.textContent = val);
@@ -1502,7 +1498,7 @@
     totalPaidOut: 0, treasuryWalletValue: 0, userWalletValue: 0,
     totalWalletValue: 0, treasuryWalletsConnected: 0, userWalletsConnected: 0,
     activeServers: 0, totalPayouts: 0, totalUsers: 0,
-    siteVisitors: 0, discordClicks: 0, managerClicks: 0,
+    siteVisitors: 0, totalCommandsRun: 0, managerClicks: 0,
     lastUpdated: new Date().toISOString(),
   };
 
