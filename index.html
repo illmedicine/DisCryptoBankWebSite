@@ -547,6 +547,116 @@
       .hero h1 { font-size: 2.2rem; }
     }
 
+    /* ── Encryption Diagram ── */
+    .encryption-diagram { position: relative; width: 100%; overflow-x: auto; }
+    .encryption-diagram svg { width: 100%; height: auto; max-width: 960px; margin: 0 auto; display: block; }
+    .shield-badge {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 10px 20px; border-radius: 12px;
+      background: rgba(34,211,238,0.08); border: 1px solid rgba(34,211,238,0.25);
+      font-size: 0.85rem; font-weight: 600; color: var(--cyan);
+    }
+    .protection-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+    }
+    .protection-card {
+      padding: 28px; text-align: center;
+      background: rgba(255,255,255,0.02); border: 1px solid var(--border);
+      border-radius: 16px; transition: all 0.3s;
+    }
+    .protection-card:hover { border-color: var(--border-accent); }
+    .protection-card .prot-icon {
+      width: 56px; height: 56px; border-radius: 14px; margin: 0 auto 16px;
+      display: flex; align-items: center; justify-content: center; font-size: 1.6rem;
+    }
+    .protection-card h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; }
+    .protection-card p { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6; }
+    .algo-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 14px; border-radius: 8px; font-size: 0.75rem; font-weight: 700;
+      font-family: var(--font-mono); letter-spacing: 0.04em;
+    }
+    .algo-badge.green { background: rgba(52,211,153,0.12); color: var(--emerald); border: 1px solid rgba(52,211,153,0.25); }
+    .algo-badge.cyan { background: rgba(34,211,238,0.12); color: var(--cyan); border: 1px solid rgba(34,211,238,0.25); }
+    .algo-badge.purple { background: rgba(167,139,250,0.12); color: var(--purple); border: 1px solid rgba(167,139,250,0.25); }
+
+    /* ── Pot Split ── */
+    .pot-split-flow {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;
+    }
+    .pot-step-card {
+      padding: 24px; border-radius: 16px; text-align: center;
+      background: rgba(255,255,255,0.02); border: 1px solid var(--border);
+      position: relative; transition: all 0.3s;
+    }
+    .pot-step-card:hover { border-color: var(--border-accent); transform: translateY(-2px); }
+    .pot-step-card .pot-num {
+      font-size: 1.6rem; font-weight: 900; color: rgba(251,191,36,0.25); margin-bottom: 8px;
+    }
+    .pot-step-card h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 6px; }
+    .pot-step-card p { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.55; }
+    .wager-mock {
+      background: var(--bg-secondary); border: 1px solid var(--border-accent);
+      border-radius: 16px; padding: 24px; position: relative; overflow: hidden;
+    }
+    .wager-mock::before {
+      content: ''; position: absolute; top: -40%; right: -40%;
+      width: 180%; height: 180%;
+      background: radial-gradient(circle, rgba(251,191,36,0.05) 0%, transparent 60%);
+    }
+    .wager-player {
+      display: flex; align-items: center; gap: 12px; padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04); position: relative;
+    }
+    .wager-player:last-child { border-bottom: none; }
+    .wager-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem; font-weight: 700; flex-shrink: 0;
+    }
+    .wager-player .name { font-size: 0.85rem; font-weight: 600; flex: 1; }
+    .wager-player .amt {
+      font-family: var(--font-mono); font-size: 0.82rem; font-weight: 600;
+    }
+
+    /* ── Wallet Guide ── */
+    .wallet-steps-grid {
+      display: grid; grid-template-columns: 1fr; gap: 20px; max-width: 700px; margin: 0 auto;
+    }
+    .wallet-step-card {
+      display: flex; gap: 20px; padding: 24px; align-items: flex-start;
+      background: rgba(255,255,255,0.02); border: 1px solid var(--border);
+      border-radius: 16px; transition: all 0.3s;
+    }
+    .wallet-step-card:hover { border-color: var(--border-accent); }
+    .wallet-step-num {
+      min-width: 44px; height: 44px; border-radius: 12px;
+      background: rgba(34,211,238,0.1); border: 1px solid rgba(34,211,238,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; font-weight: 800; color: var(--cyan); flex-shrink: 0;
+    }
+    .wallet-step-card h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 4px; }
+    .wallet-step-card p { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6; }
+    .discord-cmd-mock {
+      background: #2b2d31; border-radius: 12px; padding: 16px 20px;
+      font-family: var(--font-mono); font-size: 0.85rem; color: #b5bac1;
+      border: 1px solid #3f4147; margin-top: 12px;
+    }
+    .discord-cmd-mock .slash { color: #5865f2; font-weight: 600; }
+    .discord-cmd-mock .param { color: #57f287; }
+    .discord-cmd-mock .bot-reply {
+      margin-top: 10px; padding-top: 10px; border-top: 1px solid #3f4147;
+      color: #f2f3f5; font-size: 0.82rem;
+    }
+    .discord-cmd-mock .bot-name { color: #5865f2; font-weight: 700; font-size: 0.78rem; }
+    .discord-cmd-mock .success { color: #57f287; }
+    .discord-cmd-mock .lock-icon { color: #faa61a; }
+
+    @media (max-width: 768px) {
+      .protection-grid { grid-template-columns: 1fr; }
+      .pot-split-showcase { grid-template-columns: 1fr !important; }
+    }
+
     /* ── Animations ── */
     .fade-up {
       opacity: 0; transform: translateY(30px);
@@ -573,9 +683,10 @@
     <nav>
       <a href="#features">Features</a>
       <a href="#events">DCB Events</a>
-      <a href="#manager">Event Manager</a>
+      <a href="#security">Security</a>
+      <a href="#pot-split">Pot Split</a>
       <a href="#how">How It Works</a>
-      <a href="#commands">Commands</a>
+      <a href="#wallet-guide">Wallet Guide</a>
       <a href="#faq">FAQ</a>
     </nav>
 
@@ -1169,6 +1280,429 @@
       <div>
         <div style="font-weight:600;font-size:0.9rem;">Verification screenshots posted publicly</div>
         <div style="font-size:0.82rem;color:var(--text-secondary);">Approved proof screenshots are automatically posted to the server payroll channel for transparency and tracking. Buyers on IllySocial can see real work completed in real time.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ━━━ ADVANCED SECURITY ━━━ -->
+<section id="security">
+  <div class="container">
+    <div class="section-header fade-up" style="text-align:center;max-width:720px;margin:0 auto 56px;">
+      <div class="section-label" style="justify-content:center;">Military-Grade Protection</div>
+      <h2>ADVANCED <span class="gradient-text">SECURITY ARCHITECTURE</span></h2>
+      <p style="margin-left:auto;margin-right:auto;">Your private keys are protected at every stage — at rest, in transit, and at point of use. DisCryptoBank uses AES-256-GCM authenticated encryption, the same standard trusted by governments and financial institutions worldwide.</p>
+    </div>
+
+    <!-- Encryption Method Badges -->
+    <div class="fade-up" style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-bottom:40px;">
+      <span class="algo-badge cyan">🔐 AES-256-GCM</span>
+      <span class="algo-badge green">✅ Authenticated Encryption</span>
+      <span class="algo-badge purple">🧬 Unique IV Per Operation</span>
+      <span class="algo-badge cyan">🛡️ 96-bit Auth Tag</span>
+    </div>
+
+    <!-- Three Protection Layers -->
+    <div class="protection-grid fade-up">
+      <div class="protection-card">
+        <div class="prot-icon" style="background:rgba(34,211,238,0.1);border:1px solid rgba(34,211,238,0.2);">💾</div>
+        <h4>Protected at Rest</h4>
+        <p>All <code style="font-family:var(--font-mono);color:var(--cyan);font-size:0.78rem;">wallet_secret</code> and <code style="font-family:var(--font-mono);color:var(--cyan);font-size:0.78rem;">custodial_secret</code> values in both bot and backend SQLite databases are encrypted with AES-256-GCM. Your raw private key never exists as plaintext in any database.</p>
+      </div>
+      <div class="protection-card">
+        <div class="prot-icon" style="background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.2);">🔄</div>
+        <h4>Protected in Transit</h4>
+        <p>When secrets are transmitted between the Discord bot and the backend API, they are encrypted before the API call is made. Even if network traffic were intercepted, the payload remains gibberish without the decryption key.</p>
+      </div>
+      <div class="protection-card">
+        <div class="prot-icon" style="background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.2);">⚡</div>
+        <h4>Protected at Point-of-Use</h4>
+        <p>Private keys are decrypted only at the exact moment a Solana <code style="font-family:var(--font-mono);color:var(--purple);font-size:0.78rem;">Keypair</code> is needed for transaction signing. After signing, the decrypted key is immediately discarded from memory.</p>
+      </div>
+    </div>
+
+    <!-- Technical Details Card -->
+    <div class="card card-accent fade-up" style="padding:32px;margin-top:40px;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+        <span style="font-size:1.4rem;">🧮</span>
+        <h3 style="font-size:1.15rem;font-weight:800;">How AES-256-GCM Works in DisCryptoBank</h3>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;">
+        <div>
+          <div style="font-weight:600;font-size:0.88rem;margin-bottom:6px;color:var(--text-primary);">256-bit Key Strength</div>
+          <p style="font-size:0.82rem;color:var(--text-secondary);line-height:1.6;">AES-256 uses a 256-bit encryption key — yielding 2<sup>256</sup> possible combinations. Brute-forcing this would take longer than the age of the universe with current technology.</p>
+        </div>
+        <div>
+          <div style="font-weight:600;font-size:0.88rem;margin-bottom:6px;color:var(--text-primary);">GCM Authenticated Mode</div>
+          <p style="font-size:0.82rem;color:var(--text-secondary);line-height:1.6;">Galois/Counter Mode (GCM) provides both confidentiality and data integrity. A 96-bit authentication tag ensures any tampering with the ciphertext is immediately detected.</p>
+        </div>
+        <div>
+          <div style="font-weight:600;font-size:0.88rem;margin-bottom:6px;color:var(--text-primary);">Unique IV Per Encryption</div>
+          <p style="font-size:0.82rem;color:var(--text-secondary);line-height:1.6;">Every encryption operation generates a cryptographically random Initialization Vector (IV). Even encrypting the same key twice produces completely different ciphertext.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SVG Encryption Lifecycle Diagram -->
+    <div class="fade-up" style="margin-top:56px;">
+      <div style="text-align:center;margin-bottom:24px;">
+        <div class="section-label" style="justify-content:center;">Full Lifecycle</div>
+        <h3 style="font-size:1.4rem;font-weight:800;margin-top:8px;">ENCRYPTION LIFECYCLE <span class="gradient-text">DIAGRAM</span></h3>
+      </div>
+
+      <div class="encryption-diagram">
+        <svg viewBox="0 0 960 620" xmlns="http://www.w3.org/2000/svg" style="font-family:'Inter',sans-serif;">
+          <defs>
+            <linearGradient id="cyanGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#22d3ee" stop-opacity="0.2"/>
+              <stop offset="100%" stop-color="#06b6d4" stop-opacity="0.05"/>
+            </linearGradient>
+            <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#34d399" stop-opacity="0.2"/>
+              <stop offset="100%" stop-color="#10b981" stop-opacity="0.05"/>
+            </linearGradient>
+            <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#a78bfa" stop-opacity="0.2"/>
+              <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0.05"/>
+            </linearGradient>
+            <linearGradient id="amberGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.2"/>
+              <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.05"/>
+            </linearGradient>
+            <linearGradient id="roseGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#fb7185" stop-opacity="0.2"/>
+              <stop offset="100%" stop-color="#f43f5e" stop-opacity="0.05"/>
+            </linearGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="3" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <marker id="arrowCyan" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+              <polygon points="0 0, 10 3.5, 0 7" fill="#22d3ee" opacity="0.7"/>
+            </marker>
+            <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+              <polygon points="0 0, 10 3.5, 0 7" fill="#34d399" opacity="0.7"/>
+            </marker>
+            <marker id="arrowPurple" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+              <polygon points="0 0, 10 3.5, 0 7" fill="#a78bfa" opacity="0.7"/>
+            </marker>
+            <marker id="arrowAmber" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+              <polygon points="0 0, 10 3.5, 0 7" fill="#fbbf24" opacity="0.7"/>
+            </marker>
+            <marker id="arrowRose" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+              <polygon points="0 0, 10 3.5, 0 7" fill="#fb7185" opacity="0.7"/>
+            </marker>
+          </defs>
+
+          <!-- Background -->
+          <rect width="960" height="620" rx="20" fill="#0a0f1e" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+
+          <!-- Title -->
+          <text x="480" y="40" text-anchor="middle" fill="#94a3b8" font-size="11" font-weight="600" letter-spacing="0.15em">DISCRYPTOBANK ENCRYPTION LIFECYCLE — AES-256-GCM</text>
+
+          <!-- STEP 1: User Input -->
+          <rect x="30" y="70" width="200" height="110" rx="14" fill="url(#cyanGrad)" stroke="#22d3ee" stroke-opacity="0.35" stroke-width="1.5"/>
+          <text x="130" y="96" text-anchor="middle" fill="#22d3ee" font-size="11" font-weight="700" letter-spacing="0.08em">STEP 1 — INPUT</text>
+          <text x="130" y="118" text-anchor="middle" fill="#f1f5f9" font-size="13" font-weight="700">User enters</text>
+          <text x="130" y="136" text-anchor="middle" fill="#f1f5f9" font-size="13" font-weight="700">Private Key</text>
+          <text x="130" y="158" text-anchor="middle" fill="#94a3b8" font-size="10">via /user-wallet</text>
+          <text x="130" y="172" text-anchor="middle" fill="#94a3b8" font-size="10">Discord command</text>
+
+          <!-- Arrow 1→2 -->
+          <line x1="230" y1="125" x2="280" y2="125" stroke="#22d3ee" stroke-width="2" stroke-opacity="0.5" marker-end="url(#arrowCyan)"/>
+
+          <!-- STEP 2: Encryption -->
+          <rect x="290" y="70" width="200" height="110" rx="14" fill="url(#greenGrad)" stroke="#34d399" stroke-opacity="0.35" stroke-width="1.5"/>
+          <text x="390" y="96" text-anchor="middle" fill="#34d399" font-size="11" font-weight="700" letter-spacing="0.08em">STEP 2 — ENCRYPT</text>
+          <text x="390" y="118" text-anchor="middle" fill="#f1f5f9" font-size="13" font-weight="700">AES-256-GCM</text>
+          <text x="390" y="136" text-anchor="middle" fill="#f1f5f9" font-size="13" font-weight="700">Encryption</text>
+          <text x="390" y="158" text-anchor="middle" fill="#94a3b8" font-size="10">Random IV generated</text>
+          <text x="390" y="172" text-anchor="middle" fill="#94a3b8" font-size="10">Auth tag appended</text>
+
+          <!-- Arrow 2→3 -->
+          <line x1="490" y1="125" x2="540" y2="125" stroke="#34d399" stroke-width="2" stroke-opacity="0.5" marker-end="url(#arrowGreen)"/>
+
+          <!-- STEP 3: Storage -->
+          <rect x="550" y="70" width="200" height="110" rx="14" fill="url(#purpleGrad)" stroke="#a78bfa" stroke-opacity="0.35" stroke-width="1.5"/>
+          <text x="650" y="96" text-anchor="middle" fill="#a78bfa" font-size="11" font-weight="700" letter-spacing="0.08em">STEP 3 — STORE</text>
+          <text x="650" y="118" text-anchor="middle" fill="#f1f5f9" font-size="13" font-weight="700">Encrypted at Rest</text>
+          <text x="650" y="136" text-anchor="middle" fill="#f1f5f9" font-size="13" font-weight="700">in SQLite DB</text>
+          <text x="650" y="158" text-anchor="middle" fill="#94a3b8" font-size="10">wallet_secret (bot)</text>
+          <text x="650" y="172" text-anchor="middle" fill="#94a3b8" font-size="10">custodial_secret (backend)</text>
+
+          <!-- Arrow 3→Transit zone -->
+          <path d="M 750 125 Q 810 125 810 200" stroke="#a78bfa" stroke-width="2" stroke-opacity="0.5" fill="none" marker-end="url(#arrowPurple)"/>
+
+          <!-- Transit Zone (middle row) -->
+          <rect x="160" y="220" width="640" height="110" rx="16" fill="none" stroke="#fbbf24" stroke-opacity="0.2" stroke-width="1" stroke-dasharray="6,4"/>
+          <text x="480" y="247" text-anchor="middle" fill="#fbbf24" font-size="11" font-weight="700" letter-spacing="0.12em">IN-TRANSIT ENCRYPTION — BOT → BACKEND API</text>
+          <text x="480" y="268" text-anchor="middle" fill="#94a3b8" font-size="11">Secrets are encrypted BEFORE being sent over the network</text>
+
+          <!-- Bot icon -->
+          <rect x="200" y="278" width="140" height="40" rx="10" fill="url(#cyanGrad)" stroke="#22d3ee" stroke-opacity="0.25"/>
+          <text x="270" y="303" text-anchor="middle" fill="#22d3ee" font-size="12" font-weight="700">🤖 Discord Bot</text>
+
+          <!-- Arrow across transit -->
+          <line x1="340" y1="298" x2="520" y2="298" stroke="#fbbf24" stroke-width="2" stroke-opacity="0.5" stroke-dasharray="8,4" marker-end="url(#arrowAmber)"/>
+          <text x="430" y="292" text-anchor="middle" fill="#fbbf24" font-size="9" font-weight="600">ENCRYPTED PAYLOAD</text>
+
+          <!-- Backend icon -->
+          <rect x="530" y="278" width="170" height="40" rx="10" fill="url(#greenGrad)" stroke="#34d399" stroke-opacity="0.25"/>
+          <text x="615" y="303" text-anchor="middle" fill="#34d399" font-size="12" font-weight="700">⚙️ Backend Server</text>
+
+          <!-- Arrow down from transit zone -->
+          <path d="M 480 330 L 480 380" stroke="#fbbf24" stroke-width="2" stroke-opacity="0.5" marker-end="url(#arrowAmber)"/>
+
+          <!-- STEP 4: Point of Use Decryption -->
+          <rect x="290" y="390" width="380" height="100" rx="14" fill="url(#roseGrad)" stroke="#fb7185" stroke-opacity="0.35" stroke-width="1.5"/>
+          <text x="480" y="416" text-anchor="middle" fill="#fb7185" font-size="11" font-weight="700" letter-spacing="0.08em">STEP 4 — POINT-OF-USE DECRYPTION</text>
+          <text x="480" y="440" text-anchor="middle" fill="#f1f5f9" font-size="13" font-weight="700">Key decrypted ONLY to create Solana Keypair</text>
+          <text x="480" y="460" text-anchor="middle" fill="#94a3b8" font-size="11">Keypair used exclusively for transaction signing</text>
+          <text x="480" y="478" text-anchor="middle" fill="#94a3b8" font-size="11">Decrypted material exists in memory for milliseconds</text>
+
+          <!-- Arrow down -->
+          <path d="M 480 490 L 480 520" stroke="#fb7185" stroke-width="2" stroke-opacity="0.5" marker-end="url(#arrowRose)"/>
+
+          <!-- STEP 5: Transaction Signs & Wipe -->
+          <rect x="330" y="525" width="300" height="70" rx="14" fill="url(#amberGrad)" stroke="#fbbf24" stroke-opacity="0.35" stroke-width="1.5"/>
+          <text x="480" y="551" text-anchor="middle" fill="#fbbf24" font-size="11" font-weight="700" letter-spacing="0.08em">STEP 5 — SIGN & WIPE</text>
+          <text x="480" y="573" text-anchor="middle" fill="#f1f5f9" font-size="13" font-weight="700">Transaction signed → Key wiped from memory</text>
+          <text x="480" y="590" text-anchor="middle" fill="#94a3b8" font-size="10">Plaintext private key NEVER persisted anywhere</text>
+
+          <!-- Shield watermark -->
+          <text x="900" y="600" text-anchor="end" fill="rgba(255,255,255,0.04)" font-size="60" font-weight="900">🛡️</text>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Bottom reassurance -->
+    <div class="card fade-up" style="padding:24px;margin-top:32px;display:flex;align-items:center;gap:16px;">
+      <div style="font-size:1.5rem;">🛡️</div>
+      <div>
+        <div style="font-weight:600;font-size:0.9rem;">Your private key is never stored in plaintext — anywhere, ever.</div>
+        <div style="font-size:0.82rem;color:var(--text-secondary);">From the moment you enter your key via <code style="font-family:var(--font-mono);color:var(--cyan);font-size:0.8rem;">/user-wallet</code>, it is immediately encrypted with AES-256-GCM. It only exists in decrypted form for the brief milliseconds needed to sign a Solana transaction, then it is wiped from memory. No logs. No plaintext storage. No exposure.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ━━━ POT SPLIT GAMBLING MODE ━━━ -->
+<section id="pot-split" class="alt">
+  <div class="container">
+    <div class="section-header fade-up" style="text-align:center;max-width:720px;margin:0 auto 56px;">
+      <div class="section-label" style="justify-content:center;">New Game Mode</div>
+      <h2>POT SPLIT <span class="gradient-text">GAMBLING MODE</span></h2>
+      <p style="margin-left:auto;margin-right:auto;">A new competitive wagering system where participants stake their own crypto in head-to-head and group games. Winners take the pot — all secured by DisCryptoBank's AES-256-GCM encryption pipeline.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;" class="pot-split-showcase">
+      <!-- Left: Visual Mock -->
+      <div class="fade-up">
+        <div class="wager-mock">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;position:relative;">
+            <div style="font-weight:700;font-size:1rem;">🎰 Pot Split — Coin Flip</div>
+            <div style="padding:4px 12px;border-radius:100px;font-size:0.68rem;font-weight:700;background:rgba(251,191,36,0.15);color:#fbbf24;border:1px solid rgba(251,191,36,0.3);text-transform:uppercase;letter-spacing:0.08em;">● WAGERING</div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;position:relative;">
+            <div style="text-align:center;padding:16px;border-radius:12px;background:rgba(34,211,238,0.06);border:1px solid rgba(34,211,238,0.2);">
+              <div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">Total Pot</div>
+              <div style="font-size:1.3rem;font-weight:800;color:var(--cyan);font-family:var(--font-mono);">1.5 SOL</div>
+            </div>
+            <div style="text-align:center;padding:16px;border-radius:12px;background:rgba(251,191,36,0.06);border:1px solid rgba(251,191,36,0.2);">
+              <div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">Players</div>
+              <div style="font-size:1.3rem;font-weight:800;color:#fbbf24;font-family:var(--font-mono);">3 / 4</div>
+            </div>
+          </div>
+
+          <div style="position:relative;">
+            <div class="wager-player">
+              <div class="wager-avatar" style="background:rgba(34,211,238,0.15);color:var(--cyan);">D</div>
+              <div class="name">DeFi_Dave</div>
+              <div class="amt" style="color:var(--cyan);">0.5 SOL</div>
+              <span style="font-size:0.65rem;color:var(--emerald);margin-left:8px;">🔒 Encrypted</span>
+            </div>
+            <div class="wager-player">
+              <div class="wager-avatar" style="background:rgba(167,139,250,0.15);color:var(--purple);">S</div>
+              <div class="name">SolanaQueen</div>
+              <div class="amt" style="color:var(--purple);">0.5 SOL</div>
+              <span style="font-size:0.65rem;color:var(--emerald);margin-left:8px;">🔒 Encrypted</span>
+            </div>
+            <div class="wager-player">
+              <div class="wager-avatar" style="background:rgba(251,191,36,0.15);color:#fbbf24;">C</div>
+              <div class="name">CryptoKing99</div>
+              <div class="amt" style="color:#fbbf24;">0.5 SOL</div>
+              <span style="font-size:0.65rem;color:var(--emerald);margin-left:8px;">🔒 Encrypted</span>
+            </div>
+            <div class="wager-player" style="opacity:0.4;">
+              <div class="wager-avatar" style="background:rgba(255,255,255,0.05);color:var(--text-muted);">?</div>
+              <div class="name" style="color:var(--text-muted);">Waiting for player...</div>
+              <div class="amt" style="color:var(--text-muted);">— SOL</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: How it works -->
+      <div class="fade-up">
+        <h3 style="font-size:1.3rem;font-weight:800;margin-bottom:8px;">How Pot Split Works</h3>
+        <p style="font-size:0.9rem;color:var(--text-secondary);line-height:1.7;margin-bottom:24px;">Players wager their own SOL in competitive games — coin flips, trivia, prediction challenges, and more. The pot is split among winners, with payouts routed through DisCryptoBank's encrypted transaction system.</p>
+
+        <div class="pot-split-flow" style="grid-template-columns:1fr;gap:12px;">
+          <div class="pot-step-card" style="display:flex;gap:16px;text-align:left;">
+            <div class="pot-num" style="min-width:40px;">01</div>
+            <div>
+              <h4>Host Creates a Game</h4>
+              <p>Choose game type (coin flip, trivia, photo vote), set the wager amount per player, and max participants.</p>
+            </div>
+          </div>
+          <div class="pot-step-card" style="display:flex;gap:16px;text-align:left;">
+            <div class="pot-num" style="min-width:40px;">02</div>
+            <div>
+              <h4>Players Join & Wager</h4>
+              <p>Each participant stakes their wager from their encrypted user wallet. Funds are held securely in the pot during the game.</p>
+            </div>
+          </div>
+          <div class="pot-step-card" style="display:flex;gap:16px;text-align:left;">
+            <div class="pot-num" style="min-width:40px;">03</div>
+            <div>
+              <h4>Game Plays Out</h4>
+              <p>The game runs within Discord — votes are cast, answers submitted, or predictions made. All actions are logged.</p>
+            </div>
+          </div>
+          <div class="pot-step-card" style="display:flex;gap:16px;text-align:left;">
+            <div class="pot-num" style="min-width:40px;">04</div>
+            <div>
+              <h4>Winners Get the Pot</h4>
+              <p>Pot is automatically split among winners. Encrypted wallets are decrypted only for the payout transaction, then wiped.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Security callout for Pot Split -->
+    <div class="card card-accent fade-up" style="padding:32px;margin-top:40px;">
+      <div style="text-align:center;margin-bottom:20px;">
+        <h3 style="font-size:1.15rem;font-weight:800;">🔐 Wagering Secured by AES-256-GCM</h3>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;">
+        <div style="text-align:center;padding:16px;border-radius:12px;background:rgba(255,255,255,0.02);border:1px solid var(--border);">
+          <div style="font-size:1.3rem;margin-bottom:8px;">🔒</div>
+          <div style="font-size:0.82rem;font-weight:600;">Wagers signed with<br>encrypted private keys</div>
+        </div>
+        <div style="text-align:center;padding:16px;border-radius:12px;background:rgba(255,255,255,0.02);border:1px solid var(--border);">
+          <div style="font-size:1.3rem;margin-bottom:8px;">⚡</div>
+          <div style="font-size:0.82rem;font-weight:600;">Instant automated<br>pot distribution</div>
+        </div>
+        <div style="text-align:center;padding:16px;border-radius:12px;background:rgba(255,255,255,0.02);border:1px solid var(--border);">
+          <div style="font-size:1.3rem;margin-bottom:8px;">📜</div>
+          <div style="font-size:0.82rem;font-weight:600;">Full audit trail on<br>every wager & payout</div>
+        </div>
+        <div style="text-align:center;padding:16px;border-radius:12px;background:rgba(255,255,255,0.02);border:1px solid var(--border);">
+          <div style="font-size:1.3rem;margin-bottom:8px;">🛡️</div>
+          <div style="font-size:0.82rem;font-weight:600;">No plaintext keys<br>at any stage</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ━━━ WALLET GUIDE — ADDING PRIVATE KEY VIA /user-wallet ━━━ -->
+<section id="wallet-guide">
+  <div class="container">
+    <div class="section-header fade-up" style="text-align:center;max-width:700px;margin:0 auto 56px;">
+      <div class="section-label" style="justify-content:center;">Step-by-Step Guide</div>
+      <h2>ADDING YOUR PRIVATE KEY<br>VIA <span class="gradient-text">/USER-WALLET</span></h2>
+      <p style="margin-left:auto;margin-right:auto;">Follow these steps to securely register your Solana private key with DisCryptoBank through Discord. Your key is encrypted with AES-256-GCM the instant you submit it.</p>
+    </div>
+
+    <div class="wallet-steps-grid fade-up">
+      <!-- Step 1 -->
+      <div class="wallet-step-card">
+        <div class="wallet-step-num">1</div>
+        <div>
+          <h4>Open Discord & Navigate to Your Server</h4>
+          <p>Go to any Discord server where DisCryptoBank is installed. You can also use the bot in DMs.</p>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="wallet-step-card">
+        <div class="wallet-step-num">2</div>
+        <div>
+          <h4>Type the /user-wallet Command</h4>
+          <p>In any text channel, type <code style="font-family:var(--font-mono);color:var(--cyan);font-size:0.82rem;">/user-wallet</code> and press Enter. A secure modal dialog will appear.</p>
+          <div class="discord-cmd-mock">
+            <span class="slash">/</span>user-wallet
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="wallet-step-card">
+        <div class="wallet-step-num">3</div>
+        <div>
+          <h4>Enter Your Solana Wallet Address</h4>
+          <p>In the modal, paste your <strong>Solana public wallet address</strong> (the address you want to receive payments to).</p>
+          <div class="discord-cmd-mock">
+            <div style="font-size:0.78rem;color:#80848e;margin-bottom:6px;">Wallet Address</div>
+            <span class="param">7xKX...mNqP</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="wallet-step-card">
+        <div class="wallet-step-num">4</div>
+        <div>
+          <h4>Enter Your Private Key (Encrypted Immediately)</h4>
+          <p>Paste your Solana private key in the secure field. <strong>The moment you submit, it is encrypted with AES-256-GCM</strong> — it never exists as plaintext in any database or log.</p>
+          <div class="discord-cmd-mock">
+            <div style="font-size:0.78rem;color:#80848e;margin-bottom:6px;">Private Key (Secret)</div>
+            <span style="color:#ed4245;">••••••••••••••••••••••••••</span>
+            <div style="margin-top:6px;font-size:0.72rem;color:#faa61a;"><span class="lock-icon">🔒</span> This field is encrypted end-to-end</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 5 -->
+      <div class="wallet-step-card">
+        <div class="wallet-step-num">5</div>
+        <div>
+          <h4>Submit & Confirm</h4>
+          <p>Click Submit. DisCryptoBank will confirm your wallet has been securely registered. You'll see a confirmation message.</p>
+          <div class="discord-cmd-mock">
+            <div class="bot-reply">
+              <div class="bot-name">🤖 DisCryptoBank</div>
+              <div style="margin-top:6px;"><span class="success">✅ Wallet registered successfully!</span></div>
+              <div style="margin-top:4px;font-size:0.78rem;color:#b5bac1;">Your private key has been encrypted with AES-256-GCM and stored securely. It will only be decrypted when signing transactions on your behalf.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 6 -->
+      <div class="wallet-step-card">
+        <div class="wallet-step-num">6</div>
+        <div>
+          <h4>You're All Set — Earn Across All Servers</h4>
+          <p>Your encrypted wallet now works across every server running DisCryptoBank. Earn from tasks, events, pot split games, and direct payments — all routed to your wallet automatically.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;">
+            <span class="algo-badge green" style="font-size:0.7rem;">✅ Payroll Ready</span>
+            <span class="algo-badge cyan" style="font-size:0.7rem;">🎉 Events Ready</span>
+            <span class="algo-badge purple" style="font-size:0.7rem;">🎰 Pot Split Ready</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Security reassurance -->
+    <div class="card card-accent fade-up" style="padding:28px;margin-top:32px;max-width:700px;margin-left:auto;margin-right:auto;">
+      <div style="text-align:center;">
+        <div style="font-size:1.3rem;margin-bottom:8px;">🛡️</div>
+        <h4 style="font-size:0.95rem;font-weight:700;margin-bottom:6px;">Your Key is Safe</h4>
+        <p style="font-size:0.82rem;color:var(--text-secondary);line-height:1.6;">DisCryptoBank <strong>never logs, displays, or stores your private key in plaintext</strong>. It is encrypted with AES-256-GCM the instant you submit it and only decrypted inside secure memory for the milliseconds needed to sign a transaction. No human — not even the bot developers — can read your key.</p>
       </div>
     </div>
   </div>
