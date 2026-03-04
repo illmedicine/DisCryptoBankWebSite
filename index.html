@@ -757,6 +757,9 @@
     <span class="scroll-item ticker-stat-purple" id="ticker-bot-users"><span class="icon">👥</span> <span class="counter-val">0</span> DCB Bot Users</span>
     <span class="scroll-item ticker-stat" id="ticker-commands-run"><span class="icon">🤖</span> <span class="counter-val">0</span> Commands Run</span>
     <span class="scroll-item ticker-stat" id="ticker-manager-clicks"><span class="icon">🚀</span> <span class="counter-val">0</span> Manager Clicks</span>
+    <span class="scroll-item ticker-stat-green" id="ticker-auto-pay"><span class="icon">⚡</span> <span class="counter-val">0</span> Auto-Pay Users</span>
+    <span class="scroll-item ticker-stat-gold" id="ticker-house-earnings"><span class="icon">🏠</span> <span class="counter-val">—</span> House Earnings</span>
+    <span class="scroll-item ticker-stat-rose" id="ticker-pot-split-payouts"><span class="icon">🎰</span> <span class="counter-val">—</span> Pot Split Payouts</span>
     <!-- duplicate set for seamless loop -->
     <span class="scroll-item ticker-stat-green"><span class="icon">🏦</span> <span class="counter-val-dup treasury-wallets-dup">—</span> Treasury Wallets</span>
     <span class="scroll-item ticker-stat-purple"><span class="icon">👛</span> <span class="counter-val-dup user-wallets-dup">—</span> User Wallets</span>
@@ -770,6 +773,9 @@
     <span class="scroll-item ticker-stat-purple"><span class="icon">👥</span> <span class="counter-val-dup bot-users-dup">0</span> DCB Bot Users</span>
     <span class="scroll-item ticker-stat"><span class="icon">🤖</span> <span class="counter-val-dup commands-run-dup">0</span> Commands Run</span>
     <span class="scroll-item ticker-stat"><span class="icon">🚀</span> <span class="counter-val-dup manager-dup">0</span> Manager Clicks</span>
+    <span class="scroll-item ticker-stat-green"><span class="icon">⚡</span> <span class="counter-val-dup auto-pay-dup">0</span> Auto-Pay Users</span>
+    <span class="scroll-item ticker-stat-gold"><span class="icon">🏠</span> <span class="counter-val-dup house-earnings-dup">—</span> House Earnings</span>
+    <span class="scroll-item ticker-stat-rose"><span class="icon">🎰</span> <span class="counter-val-dup pot-split-payouts-dup">—</span> Pot Split Payouts</span>
   </div>
 </div>
 
@@ -2184,6 +2190,9 @@
       botUsers:         ['dcbBotUsers',               formatNumber],
       commandsRun:      ['totalCommandsRun',          formatNumber],
       managerClicks:    ['managerClicks',             formatNumber],
+      autoPay:          ['autoPayUsers',              formatNumber],
+      houseEarnings:    ['houseEarningsUSD',          formatUSD],
+      potSplitPayouts:  ['potSplitPayoutsUSD',        formatUSD],
     };
 
     // Build id→dataKey and dup→dataKey maps
@@ -2200,6 +2209,9 @@
       'ticker-bot-users':        'botUsers',
       'ticker-commands-run':     'commandsRun',
       'ticker-manager-clicks':   'managerClicks',
+      'ticker-auto-pay':         'autoPay',
+      'ticker-house-earnings':   'houseEarnings',
+      'ticker-pot-split-payouts':'potSplitPayouts',
     };
     const dupMap = {
       'treasury-wallets-dup': 'treasuryWallets', 'user-wallets-dup': 'userWallets',
@@ -2207,6 +2219,7 @@
       'transactions-dup': 'transactions', 'events-dup': 'events',
       'vote-events-dup': 'voteEvents', 'servers-dup': 'servers', 'payouts-dup': 'payouts',
       'bot-users-dup': 'botUsers', 'commands-run-dup': 'commandsRun', 'manager-dup': 'managerClicks',
+      'auto-pay-dup': 'autoPay', 'house-earnings-dup': 'houseEarnings', 'pot-split-payouts-dup': 'potSplitPayouts',
     };
 
     // Animate primary ticker elements
@@ -2240,6 +2253,7 @@
     totalWalletValue: 0, treasuryWalletsConnected: 0, userWalletsConnected: 0,
     activeServers: 0, totalPayouts: 0, totalUsers: 0,
     siteVisitors: 0, totalCommandsRun: 0, managerClicks: 0,
+    autoPayUsers: 0, houseEarningsUSD: 0, potSplitPayoutsUSD: 0,
     lastUpdated: new Date().toISOString(),
   };
 
