@@ -760,6 +760,8 @@
     <span class="scroll-item ticker-stat-green" id="ticker-auto-pay"><span class="icon">⚡</span> <span class="counter-val">0</span> Auto-Pay Users</span>
     <span class="scroll-item ticker-stat-gold" id="ticker-house-earnings"><span class="icon">🏠</span> <span class="counter-val">—</span> House Earnings</span>
     <span class="scroll-item ticker-stat-rose" id="ticker-pot-split-payouts"><span class="icon">🎰</span> <span class="counter-val">—</span> Pot Split Payouts</span>
+    <span class="scroll-item ticker-stat-gold" id="ticker-horse-races"><span class="icon">🐴</span> <span class="counter-val">0</span> Horse Races Hosted</span>
+    <span class="scroll-item ticker-stat-purple" id="ticker-poker-games"><span class="icon">🃏</span> <span class="counter-val">0</span> Poker Games Hosted</span>
     <!-- duplicate set for seamless loop -->
     <span class="scroll-item ticker-stat-green"><span class="icon">🏦</span> <span class="counter-val-dup treasury-wallets-dup">—</span> Treasury Wallets</span>
     <span class="scroll-item ticker-stat-purple"><span class="icon">👛</span> <span class="counter-val-dup user-wallets-dup">—</span> User Wallets</span>
@@ -776,6 +778,8 @@
     <span class="scroll-item ticker-stat-green"><span class="icon">⚡</span> <span class="counter-val-dup auto-pay-dup">0</span> Auto-Pay Users</span>
     <span class="scroll-item ticker-stat-gold"><span class="icon">🏠</span> <span class="counter-val-dup house-earnings-dup">—</span> House Earnings</span>
     <span class="scroll-item ticker-stat-rose"><span class="icon">🎰</span> <span class="counter-val-dup pot-split-payouts-dup">—</span> Pot Split Payouts</span>
+    <span class="scroll-item ticker-stat-gold"><span class="icon">🐴</span> <span class="counter-val-dup horse-races-dup">0</span> Horse Races Hosted</span>
+    <span class="scroll-item ticker-stat-purple"><span class="icon">🃏</span> <span class="counter-val-dup poker-games-dup">0</span> Poker Games Hosted</span>
   </div>
 </div>
 
@@ -2193,6 +2197,8 @@
       autoPay:          ['autoPayUsers',              formatNumber],
       houseEarnings:    ['houseEarningsUSD',          formatUSD],
       potSplitPayouts:  ['potSplitPayoutsUSD',        formatUSD],
+      horseRaces:       ['horseRaceEvents',            formatNumber],
+      pokerGames:       ['pokerGamesHosted',           formatNumber],
     };
 
     // Build id→dataKey and dup→dataKey maps
@@ -2212,6 +2218,8 @@
       'ticker-auto-pay':         'autoPay',
       'ticker-house-earnings':   'houseEarnings',
       'ticker-pot-split-payouts':'potSplitPayouts',
+      'ticker-horse-races':      'horseRaces',
+      'ticker-poker-games':      'pokerGames',
     };
     const dupMap = {
       'treasury-wallets-dup': 'treasuryWallets', 'user-wallets-dup': 'userWallets',
@@ -2220,6 +2228,7 @@
       'vote-events-dup': 'voteEvents', 'servers-dup': 'servers', 'payouts-dup': 'payouts',
       'bot-users-dup': 'botUsers', 'commands-run-dup': 'commandsRun', 'manager-dup': 'managerClicks',
       'auto-pay-dup': 'autoPay', 'house-earnings-dup': 'houseEarnings', 'pot-split-payouts-dup': 'potSplitPayouts',
+      'horse-races-dup': 'horseRaces', 'poker-games-dup': 'pokerGames',
     };
 
     // Animate primary ticker elements
@@ -2254,6 +2263,7 @@
     activeServers: 0, totalPayouts: 0, totalUsers: 0,
     siteVisitors: 0, totalCommandsRun: 0, managerClicks: 0,
     autoPayUsers: 0, houseEarningsUSD: 0, potSplitPayoutsUSD: 0,
+    horseRaceEvents: 0, pokerGamesHosted: 0,
     lastUpdated: new Date().toISOString(),
   };
 
