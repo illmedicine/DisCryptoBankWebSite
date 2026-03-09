@@ -663,6 +663,165 @@
       transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── Get Connected Modal / Wizard ── */
+    .gcm-overlay {
+      position: fixed; inset: 0; z-index: 10000;
+      background: rgba(0,0,0,0.8); backdrop-filter: blur(12px);
+      display: none; align-items: flex-start; justify-content: center;
+      overflow-y: auto; padding: 40px 20px;
+    }
+    .gcm-overlay.active { display: flex; }
+    .gcm-modal {
+      width: 100%; max-width: 780px;
+      background: var(--bg-secondary); border: 1px solid var(--border-accent);
+      border-radius: 24px; position: relative; overflow: hidden;
+      box-shadow: 0 40px 120px rgba(0,0,0,0.6), 0 0 80px rgba(34,211,238,0.08);
+    }
+    .gcm-modal::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 4px; background: linear-gradient(90deg, var(--cyan), #06b6d4, var(--purple), var(--cyan));
+      background-size: 300% 100%; animation: gcmShimmer 4s linear infinite;
+    }
+    @keyframes gcmShimmer {
+      0% { background-position: 100% 0; }
+      100% { background-position: -100% 0; }
+    }
+    .gcm-close {
+      position: absolute; top: 16px; right: 16px; z-index: 2;
+      width: 36px; height: 36px; border-radius: 10px;
+      background: rgba(255,255,255,0.06); border: 1px solid var(--border);
+      color: var(--text-secondary); font-size: 1.2rem;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+    }
+    .gcm-close:hover { background: rgba(255,255,255,0.12); color: var(--text-primary); }
+    .gcm-header {
+      padding: 40px 36px 24px; text-align: center;
+    }
+    .gcm-header h2 {
+      font-size: 1.6rem; font-weight: 900; letter-spacing: -0.02em; margin-top: 8px;
+    }
+    .gcm-header p {
+      font-size: 0.88rem; color: var(--text-secondary); margin-top: 8px; line-height: 1.6;
+    }
+    .gcm-body { padding: 0 36px 36px; }
+    .gcm-section-title {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--cyan); margin-bottom: 16px; margin-top: 28px;
+    }
+    .gcm-section-title::before {
+      content: ''; flex: 0 0 24px; height: 1px; background: var(--cyan);
+    }
+    .gcm-prereq-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    }
+    .gcm-prereq {
+      display: flex; gap: 14px; align-items: flex-start;
+      padding: 16px; border-radius: 14px;
+      background: rgba(255,255,255,0.02); border: 1px solid var(--border);
+      transition: border-color 0.3s;
+    }
+    .gcm-prereq:hover { border-color: var(--border-accent); }
+    .gcm-prereq .icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; flex-shrink: 0;
+    }
+    .gcm-prereq h4 { font-size: 0.88rem; font-weight: 700; margin-bottom: 3px; }
+    .gcm-prereq p { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.5; }
+    .gcm-prereq .dl-link {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 0.75rem; font-weight: 600; color: var(--cyan);
+      text-decoration: none; margin-top: 6px; transition: color 0.2s;
+    }
+    .gcm-prereq .dl-link:hover { color: #67e8f9; }
+    .gcm-step {
+      display: flex; gap: 18px; padding: 20px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .gcm-step:last-child { border-bottom: none; }
+    .gcm-step-num {
+      width: 40px; height: 40px; border-radius: 12px;
+      background: rgba(34,211,238,0.1); border: 1px solid rgba(34,211,238,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.88rem; font-weight: 800; color: var(--cyan); flex-shrink: 0;
+    }
+    .gcm-step h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 4px; }
+    .gcm-step p { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6; }
+    .gcm-step .tip {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 8px; padding: 6px 12px; border-radius: 8px;
+      background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.2);
+      font-size: 0.75rem; font-weight: 600; color: var(--emerald);
+    }
+    .gcm-screenshot {
+      margin-top: 12px; border-radius: 12px; overflow: hidden;
+      border: 1px solid var(--border-accent);
+      background: rgba(0,0,0,0.3);
+    }
+    .gcm-screenshot img {
+      width: 100%; height: auto; display: block;
+    }
+    .gcm-screenshot .caption {
+      padding: 8px 12px; font-size: 0.72rem; color: var(--text-muted);
+      text-align: center; background: rgba(0,0,0,0.4);
+    }
+    .gcm-mock-phantom {
+      margin-top: 12px; padding: 16px; border-radius: 12px;
+      background: #1a1a2e; border: 1px solid rgba(167,139,250,0.25);
+    }
+    .gcm-mock-phantom .top-bar {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 12px;
+    }
+    .gcm-mock-phantom .wallet-icon {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: linear-gradient(135deg, #ab9ff2, #6c63ff);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem;
+    }
+    .gcm-mock-phantom .addr {
+      font-family: var(--font-mono); font-size: 0.82rem;
+      color: #ccc; background: rgba(255,255,255,0.06);
+      padding: 8px 14px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .gcm-mock-phantom .copy-btn {
+      font-size: 0.72rem; color: var(--purple); font-weight: 600;
+      cursor: pointer;
+    }
+    .gcm-success-box {
+      margin-top: 12px; padding: 14px 18px; border-radius: 12px;
+      background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.25);
+    }
+    .gcm-success-box h5 {
+      font-size: 0.88rem; font-weight: 700; color: var(--emerald); margin-bottom: 4px;
+    }
+    .gcm-success-box p {
+      font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5;
+    }
+    .btn-get-connected {
+      background: linear-gradient(135deg, #22d3ee, #06b6d4);
+      color: #0a0f1e; font-weight: 700;
+      box-shadow: 0 4px 24px rgba(34,211,238,0.4);
+      animation: gcmPulse 3s ease-in-out infinite;
+    }
+    .btn-get-connected:hover {
+      background: linear-gradient(135deg, #67e8f9, #22d3ee);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(34,211,238,0.6);
+    }
+    @keyframes gcmPulse {
+      0%, 100% { box-shadow: 0 4px 24px rgba(34,211,238,0.4); }
+      50% { box-shadow: 0 4px 32px rgba(34,211,238,0.6), 0 0 16px rgba(34,211,238,0.2); }
+    }
+    @media (max-width: 768px) {
+      .gcm-prereq-grid { grid-template-columns: 1fr; }
+      .gcm-header { padding: 32px 20px 16px; }
+      .gcm-body { padding: 0 20px 28px; }
+      .gcm-header h2 { font-size: 1.3rem; }
+    }
   </style>
 </head>
 
@@ -689,6 +848,7 @@
       <a href="#how">How It Works</a>
       <a href="#wallet-guide">Wallet Guide</a>
       <a href="#faq">FAQ</a>
+      <a href="#" onclick="event.preventDefault();document.getElementById('gcm-overlay').classList.add('active');document.body.style.overflow='hidden';" style="color:var(--emerald);font-weight:700;">🚀 Get Started</a>
     </nav>
 
     <div class="header-actions">
@@ -734,6 +894,9 @@
         </a>
         <a class="btn btn-outline" id="hero-manager-btn" href="https://illmedicine.github.io/discord-crypto-task-payroll-bot/#dashboard" target="_blank" rel="noreferrer" onclick="trackClick('manager')">
           Event Manager →
+        </a>
+        <a class="btn btn-get-connected" href="#" onclick="event.preventDefault();document.getElementById('gcm-overlay').classList.add('active');document.body.style.overflow='hidden';">
+          🎮 Get Connected &amp; Start Playing
         </a>
       </div>
     </div>
@@ -1948,10 +2111,196 @@
         <a class="btn btn-outline" href="https://www.illyrobotic-ai.com" target="_blank" rel="noreferrer">
           Illy Robotic →
         </a>
+        <a class="btn btn-get-connected" href="#" onclick="event.preventDefault();document.getElementById('gcm-overlay').classList.add('active');document.body.style.overflow='hidden';">
+          🎮 Get Connected &amp; Start Playing
+        </a>
       </div>
     </div>
   </div>
 </section>
+
+<!-- ━━━ GET CONNECTED & START PLAYING MODAL ━━━ -->
+<div class="gcm-overlay" id="gcm-overlay" onclick="if(event.target===this){this.classList.remove('active');document.body.style.overflow='';}">
+  <div class="gcm-modal">
+    <button class="gcm-close" onclick="document.getElementById('gcm-overlay').classList.remove('active');document.body.style.overflow='';" aria-label="Close">✕</button>
+
+    <div class="gcm-header">
+      <div class="section-label" style="justify-content:center;">Setup Guide</div>
+      <h2>GET CONNECTED &amp; <span class="gradient-text">START PLAYING</span></h2>
+      <p>Follow this guide to set up everything you need to host events, run games, and earn crypto on your Discord server with DisCryptoBank.</p>
+    </div>
+
+    <div class="gcm-body">
+
+      <!-- ── PREREQUISITES ── -->
+      <div class="gcm-section-title">Prerequisites — What You Need</div>
+      <div class="gcm-prereq-grid">
+        <div class="gcm-prereq">
+          <div class="icon" style="background:rgba(88,101,242,0.15);border:1px solid rgba(88,101,242,0.3);">💬</div>
+          <div>
+            <h4>Discord Server</h4>
+            <p>You need to own (or admin) a Discord server where you'll host DCB events and games.</p>
+            <a class="dl-link" href="https://discord.com/download" target="_blank" rel="noreferrer">⬇ Download Discord App →</a>
+          </div>
+        </div>
+        <div class="gcm-prereq">
+          <div class="icon" style="background:rgba(167,139,250,0.15);border:1px solid rgba(167,139,250,0.3);">👻</div>
+          <div>
+            <h4>Phantom Wallet</h4>
+            <p>A Solana wallet to send and receive crypto payments. Available on mobile and browser extension.</p>
+            <a class="dl-link" href="https://phantom.app/download" target="_blank" rel="noreferrer">⬇ Download Phantom Wallet →</a>
+          </div>
+        </div>
+        <div class="gcm-prereq">
+          <div class="icon" style="background:rgba(34,211,238,0.15);border:1px solid rgba(34,211,238,0.3);">🤖</div>
+          <div>
+            <h4>Add DCB Bot to Server</h4>
+            <p>Add the DisCryptoBank bot to your Discord server to enable payroll, events, and games.</p>
+            <a class="dl-link" href="https://discord.com/oauth2/authorize?client_id=1465938334017912973" target="_blank" rel="noreferrer">➕ Add DisCryptoBank Bot →</a>
+          </div>
+        </div>
+        <div class="gcm-prereq">
+          <div class="icon" style="background:rgba(52,211,153,0.15);border:1px solid rgba(52,211,153,0.3);">📲</div>
+          <div>
+            <h4>Add DCB to Your Apps</h4>
+            <p>Add DisCryptoBank to your personal Discord Apps so you can use it everywhere.</p>
+            <a class="dl-link" href="https://discord.com/oauth2/authorize?client_id=1465938334017912973" target="_blank" rel="noreferrer">➕ Add to My Apps →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── STEPS ── -->
+      <div class="gcm-section-title">Step-by-Step Setup</div>
+
+      <!-- Step 1 -->
+      <div class="gcm-step">
+        <div class="gcm-step-num">1</div>
+        <div>
+          <h4>Copy Your Solana Wallet Address from Phantom</h4>
+          <p>Open the Phantom Wallet app or browser extension. Tap/click on your account name at the top, then tap the <strong>copy icon</strong> next to your Solana wallet address to copy it to your clipboard.</p>
+          <div class="gcm-mock-phantom">
+            <div class="top-bar">
+              <div class="wallet-icon">👻</div>
+              <div>
+                <div style="font-weight:700;font-size:0.88rem;color:#e8e8e8;">Account 1</div>
+                <div style="font-size:0.72rem;color:#9a90d0;">Solana · Mainnet</div>
+              </div>
+            </div>
+            <div class="addr">
+              <span>EYmqFH...mFtP</span>
+              <span class="copy-btn">📋 Copy</span>
+            </div>
+            <div style="margin-top:8px;font-size:0.72rem;color:var(--text-muted);text-align:center;">↑ Tap the copy icon to copy your full Solana wallet address</div>
+          </div>
+          <div class="tip">💡 This is your PUBLIC wallet address — safe to share</div>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="gcm-step">
+        <div class="gcm-step-num">2</div>
+        <div>
+          <h4>Log In to DCB Event Manager</h4>
+          <p>Go to the <a href="https://illmedicine.github.io/discord-crypto-task-payroll-bot/#dashboard" target="_blank" rel="noreferrer" style="color:var(--cyan);font-weight:600;">DCB Event Manager</a> and log in using the <strong>Discord Single Sign-In</strong> option. This connects your Discord account to the Event Manager dashboard.</p>
+          <div style="margin-top:10px;padding:14px;border-radius:12px;background:rgba(88,101,242,0.08);border:1px solid rgba(88,101,242,0.25);display:flex;align-items:center;gap:12px;">
+            <span style="font-size:1.3rem;">🔑</span>
+            <div>
+              <div style="font-weight:700;font-size:0.85rem;color:#7289da;">Sign in with Discord</div>
+              <div style="font-size:0.75rem;color:var(--text-muted);">Authorize DCB Event Manager to access your Discord identity</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="gcm-step">
+        <div class="gcm-step-num">3</div>
+        <div>
+          <h4>Navigate to Treasury &amp; Select Your Server</h4>
+          <p>Once logged in to the <a href="https://illmedicine.github.io/discord-crypto-task-payroll-bot/#dashboard" target="_blank" rel="noreferrer" style="color:var(--cyan);font-weight:600;">DCB Event Manager</a>, click on <strong>Treasury</strong> in the left sidebar. At the top of the screen, use the <strong>dropdown menu</strong> to select the Discord server you own and have added the DCB bot to.</p>
+          <div style="margin-top:10px;padding:14px;border-radius:12px;background:rgba(0,0,0,0.3);border:1px solid var(--border);">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+              <span style="font-size:0.85rem;">📌</span>
+              <span style="font-size:0.82rem;font-weight:700;color:var(--text-primary);">Important:</span>
+            </div>
+            <div style="font-size:0.8rem;color:var(--text-secondary);line-height:1.6;">Make sure you see your Discord server listed in the dropdown at the top of the DCB Event Manager screen. The server you own — and have added the DCB bot to — must be selected before proceeding.</div>
+          </div>
+          <div class="tip">💡 If you don't see your server, make sure the DCB bot has been added to it</div>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="gcm-step">
+        <div class="gcm-step-num">4</div>
+        <div>
+          <h4>Add Your Phantom Solana Wallet Address</h4>
+          <p>In the <strong>Treasury</strong> screen, paste the Solana wallet address you copied from Phantom in Step 1. This connects your treasury wallet to your Discord server so DCB can route payments.</p>
+          <div style="margin-top:10px;padding:14px;border-radius:12px;background:rgba(0,0,0,0.3);border:1px solid var(--border);">
+            <div style="font-size:0.72rem;color:var(--text-muted);margin-bottom:6px;">Treasury Wallet Address</div>
+            <div style="font-family:var(--font-mono);font-size:0.85rem;color:var(--cyan);background:rgba(34,211,238,0.06);padding:10px 14px;border-radius:8px;border:1px solid rgba(34,211,238,0.15);">EYmqFH...mFtP · <span style="color:var(--emerald);">Mainnet</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 5 -->
+      <div class="gcm-step">
+        <div class="gcm-step-num">5</div>
+        <div>
+          <h4>Copy Your Private Key from Phantom</h4>
+          <p>Go back to <strong>Phantom Wallet</strong>. Navigate to <strong>Settings → Security &amp; Privacy</strong>, select your account, and choose <strong>"Export Private Key"</strong>. You'll be asked to enter your password to reveal it. Copy the private key.</p>
+          <div class="gcm-mock-phantom">
+            <div style="text-align:center;margin-bottom:10px;">
+              <div style="font-weight:700;font-size:0.88rem;color:#e8e8e8;">⚙️ Settings → Security &amp; Privacy</div>
+              <div style="font-size:0.72rem;color:#9a90d0;margin-top:4px;">Export Private Key</div>
+            </div>
+            <div class="addr">
+              <span style="color:#ed4245;">••••••••••••••••••••••••••••</span>
+              <span class="copy-btn">📋 Copy</span>
+            </div>
+            <div style="margin-top:8px;font-size:0.72rem;color:var(--text-muted);text-align:center;">↑ Copy your private key to paste in DCB Event Manager</div>
+          </div>
+          <div class="tip" style="background:rgba(251,113,133,0.08);border-color:rgba(251,113,133,0.2);color:var(--rose);">⚠️ NEVER share your private key with anyone. DCB encrypts it with AES-256-GCM immediately upon submission.</div>
+        </div>
+      </div>
+
+      <!-- Step 6 -->
+      <div class="gcm-step">
+        <div class="gcm-step-num">6</div>
+        <div>
+          <h4>Paste Private Key in DCB Treasury &amp; Save</h4>
+          <p>Go back to the <strong>DCB Event Manager Treasury</strong> screen. Paste your private key in the designated field and click <strong>Save</strong>. Once saved, you should see <strong style="color:var(--emerald);">"Auto-Payouts Enabled"</strong> — this means your treasury is fully connected and payouts will be sent automatically.</p>
+          <div class="gcm-success-box">
+            <h5>✅ Auto-Payouts Enabled</h5>
+            <p>/pay and horse race payouts will be sent from this treasury wallet automatically. Your wallet secrets are encrypted with AES-256-GCM — never stored in plaintext.</p>
+          </div>
+          <div style="margin-top:10px;padding:14px;border-radius:12px;background:rgba(0,0,0,0.3);border:1px solid var(--border);">
+            <div style="font-size:0.82rem;color:var(--text-secondary);line-height:1.6;">
+              <span style="font-size:1rem;">🔒</span> <strong style="color:var(--text-primary);">CONNECTED</strong> — Treasury wallet address and private key are encrypted and stored securely.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Success / Done -->
+      <div style="margin-top:32px;padding:28px;border-radius:16px;background:linear-gradient(135deg,rgba(52,211,153,0.06),rgba(34,211,238,0.06));border:1px solid rgba(52,211,153,0.2);text-align:center;">
+        <div style="font-size:2rem;margin-bottom:10px;">🎉</div>
+        <h3 style="font-size:1.15rem;font-weight:800;margin-bottom:8px;">You're All Set!</h3>
+        <p style="font-size:0.88rem;color:var(--text-secondary);line-height:1.6;max-width:520px;margin:0 auto;">
+          You can now use <strong style="color:var(--cyan);">DCB Event Manager</strong> to create events, host games, run payroll, and manage your Discord server — all with automatic encrypted crypto payouts!
+        </p>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:20px;">
+          <a class="btn btn-primary" href="https://illmedicine.github.io/discord-crypto-task-payroll-bot/#dashboard" target="_blank" rel="noreferrer" onclick="trackClick('manager')" style="font-size:0.85rem;">
+            🚀 Open DCB Event Manager
+          </a>
+          <a class="btn btn-glow" href="https://discord.com/oauth2/authorize?client_id=1465938334017912973" target="_blank" rel="noreferrer" onclick="trackClick('discord')" style="font-size:0.85rem;">
+            🤖 Add DCB Bot to Discord
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
 
 <!-- ━━━ FOOTER ━━━ -->
 <footer>
@@ -2322,6 +2671,21 @@
 
   // Expose refresh function so tracking code can trigger immediate update
   window._dcbRefreshStats = fetchStats;
+})();
+</script>
+
+<!-- ━━━ GET CONNECTED MODAL — KEYBOARD SUPPORT ━━━ -->
+<script>
+(function() {
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var overlay = document.getElementById('gcm-overlay');
+      if (overlay && overlay.classList.contains('active')) {
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+  });
 })();
 </script>
 
